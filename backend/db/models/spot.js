@@ -17,6 +17,25 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: 'CASCADE',
         }
       )
+      Spot.hasMany(
+        models.SpotImage, {
+          foreignKey: 'spotId'
+        }
+      )
+      Spot.belongsToMany(
+        models.User, {
+          through: models.Review,
+          foreignKey: 'spotId',
+          otherKey: 'userId'
+        }
+      )
+      Spot.belongsToMany(
+        models.User, {
+          through: models.Booking,
+          foreignKey: 'spotId',
+          otherKey: 'userId'
+        }
+      )
     }
   }
   Spot.init({
@@ -25,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     address: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true
     },
     city: {
       type: DataTypes.STRING,
@@ -45,7 +65,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: -90.0000000,
         max: 90.0000000
-      }
+      },
+      unique: true
     },
     lng: {
       type: DataTypes.DECIMAL,
@@ -53,7 +74,8 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         min: -180.0000000,
         max: 180.0000000
-      }
+      },
+      unique: true
     },
     name: {
       type: DataTypes.STRING,
@@ -76,6 +98,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Spot',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    }
   });
   return Spot;
 };
