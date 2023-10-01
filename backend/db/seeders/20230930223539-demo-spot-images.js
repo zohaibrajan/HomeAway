@@ -21,12 +21,12 @@ module.exports = {
     */
    await SpotImage.bulkCreate([
     {
-      spotId: 2,
+      spotId: 1,
       url: 'https://square-realestate.com/properties/1008-mcconnell-drive-decatur-ga-30033-7156284',
-      preview: false
+      preview: true
     },
     {
-      spotId: 1,
+      spotId: 2,
       url: 'https://square-realestate.com/properties/2701-lovejoy-circle-duluth-ga-30097-8901220',
       preview: false
     }
