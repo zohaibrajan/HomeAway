@@ -4,21 +4,22 @@ const sequelize = require('sequelize')
 
 router.get('/', async (req, res, next) => {
   const spots = await Spot.findAll({
-        include: [
-        {
-            model: SpotImage,
-            attributes: ['url']
-        },
-        {
-            model: Review,
-            attributes: []
-        }
-        ],
-        attributes: {
-            include: [
-                [ sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating' ]
-        ]
-    },
+    include: [
+      {
+        model: SpotImage,
+        attributes: ['url']
+      },
+      {
+        model: Review,
+        attributes: []
+      }
+    ],
+      attributes: {
+          include: [
+          [sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating']
+      ]
+  },
+    group: ['Spot.id'] 
   });
 
   const spotsJSON = spots.map(spot => spot.toJSON());
