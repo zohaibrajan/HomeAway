@@ -1,5 +1,5 @@
 const express = require('express');
-const { Spot, SpotImage, Review } = require('../../db/models');
+const { Spot, SpotImage, Review, sequelize } = require('../../db/models');
 const { Model } = require('sequelize');
 const router = express.Router();
 
@@ -20,7 +20,6 @@ router.get('/', async (req, res, next) => {
         spot.previewImage = spot.SpotImages[0].url
         delete spot.SpotImages
     }
-
 
     res.json({
         Spots: spotsJSON
