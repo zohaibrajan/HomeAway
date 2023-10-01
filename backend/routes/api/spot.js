@@ -1,29 +1,38 @@
-const express = require('express');
-const { Spot, SpotImage, Review, sequelize } = require('../../db/models');
-const { Model } = require('sequelize');
-const router = express.Router();
+const router = require('express').Router();
+const { Spot, SpotImage, Review } = require('../../db/models');
+const sequelize = require('sequelize')
 
 router.get('/', async (req, res, next) => {
-    const spots = await Spot.findAll({
+  const spots = await Spot.findAll({
         include: [
-            {
-                model: SpotImage,
-                attributes: ['url']
-            }
+        {
+            model: SpotImage,
+            attributes: ['url']
+        },
+        {
+            model: Review,
+            attributes: []
+        }
+        ],
+        attributes: {
+            include: [
+                [ sequelize.fn('AVG', sequelize.col('Reviews.stars')), 'avgRating' ]
         ]
-    });
+    },
+  });
 
-    const spotsJSON = spots.map(spot => spot.toJSON());
+  const spotsJSON = spots.map(spot => spot.toJSON());
 
-    for (let i = 0; i < spotsJSON.length; i++) {
-        const spot = spotsJSON[i];
-        spot.previewImage = spot.SpotImages[0].url
-        delete spot.SpotImages
-    }
+  for (let i = 0; i < spotsJSON.length; i++) {
+    const spot = spotsJSON[i];
 
-    res.json({
-        Spots: spotsJSON
-    });
+    spot.previewImage = spot.SpotImages[0].url
+    delete spot.SpotImages
+  }
+
+  res.json({
+    Spots: spotsJSON
+  });
 })
 
 module.exports = router
