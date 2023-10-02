@@ -46,7 +46,7 @@ module.exports = {
     options.tableName = 'Bookings';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      startDate: { [Op.in]: ['11-20-2020', '5-20-2020'] }
+      startDate: { [Op.in]: ['11-20-2020', '12-20-2020'] }
     }, {});
   }
 };
