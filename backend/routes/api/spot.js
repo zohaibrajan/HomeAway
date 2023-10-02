@@ -83,7 +83,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 })
 
-router.get('/:spotId', requireAuth, async (req, res, next) => {
+router.get('/:spotId', async (req, res, next) => {
   const { spotId } = req.params;
 
   const spot = await Spot.unscoped().findByPk(spotId)
@@ -130,6 +130,28 @@ router.get('/:spotId', requireAuth, async (req, res, next) => {
 
   res.json(spotJSON)
 
+})
+
+router.post('/', requireAuth, async (req, res, next) => {
+    const { address, city, state, country, lat, lng, name,
+    description, price } = req.body
+
+    const { user } = req
+
+    const newSpot = await Spot.create({
+        ownerId: user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    }, { validate: true })
+
+    res.json(newSpot);
 })
 
 module.exports = router
