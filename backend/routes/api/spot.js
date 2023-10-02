@@ -83,7 +83,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 })
 
-router.get('/:spotId/^-?\d+$/;', requireAuth, async (req, res, next) => {
+router.get('/:spotId', requireAuth, async (req, res, next) => {
   const { spotId } = req.params;
 
   const spot = await Spot.findByPk(spotId);
@@ -94,6 +94,8 @@ router.get('/:spotId/^-?\d+$/;', requireAuth, async (req, res, next) => {
         message: "Spot couldn't be found"
     })
   }
+
+  res.json(spot)
 
 })
 
