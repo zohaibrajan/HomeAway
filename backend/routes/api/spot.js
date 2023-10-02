@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Spot, SpotImage, Review } = require('../../db/models');
+const { Spot, SpotImage, Review, User } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const sequelize = require('sequelize')
 
@@ -81,6 +81,55 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({
         Spots: spotsJSON
     });
+})
+
+router.get('/:spotId', requireAuth, async (req, res, next) => {
+  const { spotId } = req.params;
+
+  const spot = await Spot.unscoped().findByPk(spotId)
+
+  if (!(spot instanceof Spot)) {
+    res.status(404);
+    return res.json({
+        message: "Spot couldn't be found"
+    })
+  }
+
+  const spotJSON = spot.toJSON()
+
+  const reviews = await spot.getReviews()
+  spotJSON.numReviews = reviews.length;
+
+
+  const avg = await Review.sum('stars', {
+    where: {
+        spotId: spot.id
+    }
+  })
+
+  spotJSON.avgRating = avg / reviews.length
+
+  const image = await SpotImage.findAll({
+    where: {
+        spotId: spot.id
+    },
+    attributes: {
+        exclude: ['spotId', 'createdAt', 'updatedAt']
+    }
+  })
+
+
+  spotJSON.SpotImages = image
+
+  const owner = await User.findByPk(spot.ownerId, {
+    attributes: {
+        exclude: ['username']
+    }
+  })
+  spotJSON.Owner = owner
+
+  res.json(spotJSON)
+
 })
 
 module.exports = router
