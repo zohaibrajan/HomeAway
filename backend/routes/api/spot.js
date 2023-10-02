@@ -29,9 +29,9 @@ router.get('/', async (req, res, next) => {
             where: {
                 spotId: spot.id
             }
-        }) / reviews.length;
+        })
 
-        spot.avgRating = avg
+        spot.avgRating = avg / reviews.length;
         spot.previewImage = spot.SpotImages[0].url
         delete spot.SpotImages
     }
@@ -71,9 +71,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
             where: {
                 spotId: spot.id
             }
-        }) / reviews.length;
+        })
 
-        spot.avgRating = avg
+        spot.avgRating = avg / reviews.length;
         spot.previewImage = spot.SpotImages[0].url
         delete spot.SpotImages
     }
