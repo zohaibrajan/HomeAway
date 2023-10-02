@@ -29,9 +29,9 @@ router.get('/', async (req, res, next) => {
             where: {
                 spotId: spot.id
             }
-        }) / reviews.length;
+        })
 
-        spot.avgRating = avg
+        spot.avgRating = avg / reviews.length;
         spot.previewImage = spot.SpotImages[0].url
         delete spot.SpotImages
     }
@@ -71,9 +71,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
             where: {
                 spotId: spot.id
             }
-        }) / reviews.length;
+        })
 
-        spot.avgRating = avg
+        spot.avgRating = avg / reviews.length;
         spot.previewImage = spot.SpotImages[0].url
         delete spot.SpotImages
     }
@@ -83,7 +83,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 })
 
-router.get('/:spotId', requireAuth, async (req, res, next) => {
+router.get('/:spotId', async (req, res, next) => {
   const { spotId } = req.params;
 
   const spot = await Spot.unscoped().findByPk(spotId)
@@ -130,6 +130,28 @@ router.get('/:spotId', requireAuth, async (req, res, next) => {
 
   res.json(spotJSON)
 
+})
+
+router.post('/', requireAuth, async (req, res, next) => {
+    const { address, city, state, country, lat, lng, name,
+    description, price } = req.body
+
+    const { user } = req
+
+    const newSpot = await Spot.create({
+        ownerId: user.id,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+
+    res.json(newSpot);
 })
 
 module.exports = router
