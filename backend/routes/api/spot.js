@@ -95,6 +95,17 @@ router.get('/:spotId', requireAuth, async (req, res, next) => {
     })
   }
 
+  const reviews = await spot.getReviews()
+  spot.numReviews = reviews.length;
+
+  const avg = await Review.sum('stars', {
+            where: {
+                spotId: spot.id
+            }
+        }) / reviews.length;
+
+    spot.avgRating = avg
+
   res.json(spot)
 
 })
