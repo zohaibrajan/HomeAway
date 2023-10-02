@@ -31,8 +31,13 @@ router.get('/', async (req, res, next) => {
             }
         })
 
-        spot.avgRating = avg / reviews.length;
-        spot.previewImage = spot.SpotImages[0].url
+        if (spot.SpotImages.length > 0) {
+            spot.avgRating = avg / reviews.length;
+            spot.previewImage = spot.SpotImages[0].url
+        } else {
+            spot.previewImage = null
+            spot.avgRating = 0;
+        }
         delete spot.SpotImages
     }
 
@@ -73,8 +78,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
         })
 
-        spot.avgRating = avg / reviews.length;
-        spot.previewImage = spot.SpotImages[0].url
+        if (spot.SpotImages.length > 0) {
+            spot.avgRating = avg / reviews.length;
+            spot.previewImage = spot.SpotImages[0].url
+        } else {
+            spot.previewImage = null
+            spot.avgRating = 0;
+        }
         delete spot.SpotImages
     }
 
