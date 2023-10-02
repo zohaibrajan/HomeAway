@@ -149,7 +149,7 @@ router.post('/', requireAuth, async (req, res, next) => {
         name,
         description,
         price
-    }, { validate: true })
+    })
 
     res.json(newSpot);
 })
