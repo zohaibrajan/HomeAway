@@ -1,8 +1,40 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
-const sequelize = require('sequelize')
+const sequelize = require('sequelize');
+
+const validateSpot = [
+  check('address')
+    .exists({ checkFalsy: true })
+    .withMessage("Street address is required"),
+  check('city')
+    .exists({ checkFalsy: true })
+    .withMessage("City is required"),
+  check('state')
+    .exists({ checkFalsy: true })
+    .withMessage("State is required"),
+  check("country")
+    .exists({ checkFalsy: true })
+    .withMessage("Country is required"),
+check("lat")
+    .exists({ checkFalsy: true })
+    .withMessage("Latitude is not valid"),
+check("lng")
+    .exists({ checkFalsy: true })
+    .withMessage("Longitude is not valid"),
+check("name")
+    .exists({ checkFalsy: true })
+    .withMessage("Name must be less than 50 characters"),
+check("description")
+    .exists({ checkFalsy: true })
+    .withMessage("Description is required"),
+check("price")
+    .exists({ checkFalsy: true })
+    .withMessage("Price per day is required"),
+  handleValidationErrors
+];
 
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
@@ -165,7 +197,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 })
 
-router.post('/', requireAuth, async (req, res, next) => {
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name,
     description, price } = req.body
 
@@ -201,9 +233,9 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
     }
 
     if (spot.ownerId !== user.id) {
-        res.status(400);
+        res.status(403);
         return res.json({
-            message: "Cannot Add Image, Spot does not belong to you"
+            message: "Forbidden"
         })
     }
 
@@ -224,9 +256,10 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         url: newImage.url,
         preview: newImage.preview
     })
+
 })
 
-router.put('/:spotId', requireAuth, async (req, res, next) => {
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     const { user } = req;
     const spot = await Spot.unscoped().findByPk(req.params.spotId)
 
@@ -237,10 +270,10 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
         })
     }
 
-    if (spot.ownerId !== user.id) {
-        res.status(400);
+   if (spot.ownerId !== user.id) {
+        res.status(403);
         return res.json({
-            message: "Cannot Edit, Spot does not belong to you"
+            message: "Forbidden"
         })
     }
 
@@ -248,15 +281,15 @@ router.put('/:spotId', requireAuth, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name,
     description, price } = req.body;
 
-    if (address) spot.address = address;
-    if (city) spot.city = city;
-    if (state) spot.state = state;
-    if (country) spot.country = country;
-    if (lat) spot.lat = lat;
-    if (lng) spot.lng = lng;
-    if (name) spot.name = name;
-    if (description) spot.description = description;
-    if (price) spot.price = price;
+    spot.address = address;
+    spot.city = city;
+    spot.state = state;
+    spot.country = country;
+    spot.lat = lat;
+    spot.lng = lng;
+    spot.name = name;
+    spot.description = description;
+    spot.price = price;
 
     await spot.save();
 
@@ -276,10 +309,10 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         })
     }
 
-    if (spot.ownerId !== user.id) {
-        res.status(400);
+   if (spot.ownerId !== user.id) {
+        res.status(403);
         return res.json({
-            message: "Cannot Add Image, Spot does not belong to you"
+            message: "Forbidden"
         })
     }
 
