@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
         include: [
             {
                 model: SpotImage,
-                attributes: ['url']
+                attributes: ['url', 'preview']
             }
         ]
     });
@@ -31,9 +31,21 @@ router.get('/', async (req, res, next) => {
             }
         })
 
+
         if (spot.SpotImages.length > 0) {
             spot.avgRating = avg / reviews.length;
-            spot.previewImage = spot.SpotImages[0].url
+
+            for (let i = 0; i < spot.SpotImages.length; i++) {
+                const image = spot.SpotImages[i];
+
+                if (image.preview) {
+                    spot.previewImage = image.url
+                    break
+                } else if (image.preview === false) {
+                    spot.previewImage = null
+                }
+
+            }
         } else {
             spot.previewImage = null
             spot.avgRating = 0;
@@ -55,7 +67,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         include: [
             {
                 model: SpotImage,
-                attributes: ['url']
+                attributes: ['url', 'preview']
             }
         ]
     });
@@ -80,7 +92,17 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
         if (spot.SpotImages.length > 0) {
             spot.avgRating = avg / reviews.length;
-            spot.previewImage = spot.SpotImages[0].url
+
+            for (let i = 0; i < spot.SpotImages.length; i++) {
+                const image = spot.SpotImages[i];
+
+                if (image.preview) {
+                    spot.previewImage = image.url
+                    break
+                } else if (image.preview === false) {
+                    spot.previewImage = null
+                }
+            }
         } else {
             spot.previewImage = null
             spot.avgRating = 0;
