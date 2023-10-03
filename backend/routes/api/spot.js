@@ -1,7 +1,40 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const sequelize = require('sequelize')
+const { check } = require('express-validator');
+const { handleValidationErrors } = require('../../utils/validation')
+const sequelize = require('sequelize');
+
+const validateSpot = [
+  check('address')
+    .exists({ checkFalsy: true })
+    .withMessage("Street address is required"),
+  check('city')
+    .exists({ checkFalsy: true })
+    .withMessage("City is required"),
+  check('state')
+    .exists({ checkFalsy: true })
+    .withMessage("State is required"),
+  check("country")
+    .exists({ checkFalsy: true })
+    .withMessage("Country is required"),
+check("lat")
+    .exists({ checkFalsy: true })
+    .withMessage("Latitude is not valid"),
+check("lng")
+    .exists({ checkFalsy: true })
+    .withMessage("Longitude is not valid"),
+check("name")
+    .exists({ checkFalsy: true })
+    .withMessage("Name must be less than 50 characters"),
+check("description")
+    .exists({ checkFalsy: true })
+    .withMessage("Description is required"),
+check("price")
+    .exists({ checkFalsy: true })
+    .withMessage("Price per day is required"),
+  handleValidationErrors
+];
 
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
@@ -164,7 +197,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 })
 
-router.post('/', requireAuth, async (req, res, next) => {
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name,
     description, price } = req.body
 
@@ -183,36 +216,111 @@ router.post('/', requireAuth, async (req, res, next) => {
         price
     })
 
+    res.status(201)
     res.json(newSpot);
 })
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
-  const spot = await Spot.findByPk(req.params.spotId)
+    const { user } = req;
 
-  if (!(spot instanceof Spot)) {
-    res.status(404);
-    return res.json({
-        message: "Spot couldn't be found"
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if (!(spot instanceof Spot)) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    if (spot.ownerId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden"
+        })
+    }
+
+    const images = await spot.getSpotImages();
+
+    const { url, preview } = req.body
+
+    const newImage = await SpotImage.create({
+        spotId: spot.id,
+        url,
+        preview
     })
-  }
 
-  const images = await spot.getSpotImages();
+    images.push(newImage)
 
-  const { url, preview } = req.body
+    res.json({
+        id: newImage.id,
+        url: newImage.url,
+        preview: newImage.preview
+    })
 
-  const newImage = await SpotImage.create({
-    spotId: spot.id,
-    url,
-    preview
-  })
+})
 
-  images.push(newImage)
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
+    const { user } = req;
+    const spot = await Spot.unscoped().findByPk(req.params.spotId)
 
-  res.json({
-    id: newImage.id,
-    url: newImage.url,
-    preview: newImage.preview
-  })
+    if (!(spot instanceof Spot)) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+   if (spot.ownerId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden"
+        })
+    }
+
+
+    const { address, city, state, country, lat, lng, name,
+    description, price } = req.body;
+
+    spot.address = address;
+    spot.city = city;
+    spot.state = state;
+    spot.country = country;
+    spot.lat = lat;
+    spot.lng = lng;
+    spot.name = name;
+    spot.description = description;
+    spot.price = price;
+
+    await spot.save();
+
+    res.json(spot)
+
+});
+
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const { user } = req;
+
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if (!(spot instanceof Spot)) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+   if (spot.ownerId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden"
+        })
+    }
+
+    await spot.destroy();
+
+    res.json({
+        message: "Successfully deleted"
+    })
 })
 
 module.exports = router
