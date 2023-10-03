@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { handleValidationErrors } = require('../../utils/validation')
 const sequelize = require('sequelize')
 
 router.get('/', async (req, res, next) => {
@@ -183,36 +184,110 @@ router.post('/', requireAuth, async (req, res, next) => {
         price
     })
 
+    res.status(201)
     res.json(newSpot);
 })
 
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
-  const spot = await Spot.findByPk(req.params.spotId)
+    const { user } = req;
 
-  if (!(spot instanceof Spot)) {
-    res.status(404);
-    return res.json({
-        message: "Spot couldn't be found"
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if (!(spot instanceof Spot)) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    if (spot.ownerId !== user.id) {
+        res.status(400);
+        return res.json({
+            message: "Cannot Add Image, Spot does not belong to you"
+        })
+    }
+
+    const images = await spot.getSpotImages();
+
+    const { url, preview } = req.body
+
+    const newImage = await SpotImage.create({
+        spotId: spot.id,
+        url,
+        preview
     })
-  }
 
-  const images = await spot.getSpotImages();
+    images.push(newImage)
 
-  const { url, preview } = req.body
+    res.json({
+        id: newImage.id,
+        url: newImage.url,
+        preview: newImage.preview
+    })
+})
 
-  const newImage = await SpotImage.create({
-    spotId: spot.id,
-    url,
-    preview
-  })
+router.put('/:spotId', requireAuth, async (req, res, next) => {
+    const { user } = req;
+    const spot = await Spot.unscoped().findByPk(req.params.spotId)
 
-  images.push(newImage)
+    if (!(spot instanceof Spot)) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
 
-  res.json({
-    id: newImage.id,
-    url: newImage.url,
-    preview: newImage.preview
-  })
+    if (spot.ownerId !== user.id) {
+        res.status(400);
+        return res.json({
+            message: "Cannot Edit, Spot does not belong to you"
+        })
+    }
+
+
+    const { address, city, state, country, lat, lng, name,
+    description, price } = req.body;
+
+    if (address) spot.address = address;
+    if (city) spot.city = city;
+    if (state) spot.state = state;
+    if (country) spot.country = country;
+    if (lat) spot.lat = lat;
+    if (lng) spot.lng = lng;
+    if (name) spot.name = name;
+    if (description) spot.description = description;
+    if (price) spot.price = price;
+
+    await spot.save();
+
+    res.json(spot)
+
+});
+
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    const { user } = req;
+
+    const spot = await Spot.findByPk(req.params.spotId)
+
+    if (!(spot instanceof Spot)) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    if (spot.ownerId !== user.id) {
+        res.status(400);
+        return res.json({
+            message: "Cannot Add Image, Spot does not belong to you"
+        })
+    }
+
+    await spot.destroy();
+
+    res.json({
+        message: "Successfully deleted"
+    })
 })
 
 module.exports = router
