@@ -164,4 +164,33 @@ router.post('/', requireAuth, async (req, res, next) => {
     res.json(newSpot);
 })
 
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.spotId)
+
+  if (!(spot instanceof Spot)) {
+    res.status(404);
+    return res.json({
+        message: "Spot couldn't be found"
+    })
+  }
+
+  const images = await spot.getSpotImages();
+
+  const { url, preview } = req.body
+
+  const newImage = await SpotImage.create({
+    spotId: spot.id,
+    url,
+    preview
+  })
+
+  images.push(newImage)
+
+  res.json({
+    id: newImage.id,
+    url: newImage.url,
+    preview: newImage.preview
+  })
+})
+
 module.exports = router
