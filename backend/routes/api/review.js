@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation')
+const { validateReview } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -121,6 +120,60 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
     res.json({
         id: newReviewImage.id,
         url: newReviewImage.url
+    })
+
+})
+
+router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
+    const { user } = req
+    const currReview = await Review.unscoped().findByPk(req.params.reviewId);
+
+    if (!currReview) {
+        res.status(404);
+        return res.json({
+            message: "Review couldn't be found"
+        })
+    }
+
+    if (currReview.userId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden"
+        })
+    }
+
+    const { review, stars } = req.body
+
+    currReview.review = review;
+    currReview.stars = stars
+
+    await currReview.save();
+
+    res.json(currReview)
+});
+
+router.delete('/:reviewId', requireAuth, async(req, res, next) => {
+    const { user } = req
+    const review = await Review.findByPk(req.params.reviewId);
+
+     if (!review) {
+        res.status(404);
+        return res.json({
+            message: "Review couldn't be found"
+        })
+    }
+
+    if (review.userId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden"
+        })
+    }
+
+    await review.destroy();
+
+    res.json({
+        message: "Successfully deleted"
     })
 
 })
