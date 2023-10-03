@@ -40,6 +40,7 @@ check("price")
 const validateReview = [
     check("review")
         .exists({checkFalsy: true})
+        .isString()
         .withMessage("Review text is required"),
     check("stars")
         .exists({checkFalsy: true})
@@ -188,7 +189,10 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
         review.User = user;
 
-        const reviewImages = await ReviewImage.findByPk(review.id, {
+        const reviewImages = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id
+            },
             attributes: {
                 exclude: ['reviewId']
             }
