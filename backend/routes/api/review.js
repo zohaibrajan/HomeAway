@@ -64,7 +64,10 @@ router.get('/current', requireAuth, async (req, res, next) => {
         review.Spot = currSpotJSON
 
 
-        const reviewImages = await ReviewImage.findByPk(review.id, {
+        const reviewImages = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id
+            },
             attributes: {
                 exclude: ['reviewId']
             }
@@ -76,6 +79,48 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
     res.json({
         Reviews: reviewsJSON
+    })
+
+})
+
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    const { user } = req
+    const review = await Review.findByPk(req.params.reviewId);
+
+    if (!review) {
+        res.status(404);
+        return res.json({
+            message: "Review couldn't be found"
+        })
+    }
+    if (review.userId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden"
+        })
+    }
+
+    const images = await review.getReviewImages()
+
+    if (images.length >= 10) {
+        res.status(403);
+        return res.json({
+            message: "Maximum number of images for this resource was reached"
+        })
+    }
+
+    const { url } = req.body
+
+    const newReviewImage = await ReviewImage.create({
+        reviewId: review.id,
+        url
+    })
+
+    images.push(newReviewImage)
+
+    res.json({
+        id: newReviewImage.id,
+        url: newReviewImage.url
     })
 
 })

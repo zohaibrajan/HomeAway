@@ -4,6 +4,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
 const sequelize = require('sequelize');
+const review = require('../../db/models/review');
 
 const validateSpot = [
   check('address')
@@ -35,6 +36,17 @@ check("price")
     .withMessage("Price per day is required"),
   handleValidationErrors
 ];
+
+const validateReview = [
+    check("review")
+        .exists({checkFalsy: true})
+        .isString()
+        .withMessage("Review text is required"),
+    check("stars")
+        .exists({checkFalsy: true})
+        .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors
+]
 
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
@@ -177,7 +189,10 @@ router.get('/:spotId/reviews', async (req, res, next) => {
 
         review.User = user;
 
-        const reviewImages = await ReviewImage.findByPk(review.id, {
+        const reviewImages = await ReviewImage.findAll({
+            where: {
+                reviewId: review.id
+            },
             attributes: {
                 exclude: ['reviewId']
             }
@@ -189,6 +204,47 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     res.json({
         Reviews: reviewsJSON
     })
+})
+
+router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, next) => {
+    const { user } = req;
+    const { review, stars } = req.body
+
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    const reviews = await spot.getReviews()
+
+    const userReview = await Review.findOne({
+        where: {
+            userId: user.id
+        }
+    })
+
+    if (userReview) {
+        res.status(500);
+        return res.json({
+            message: "User already has a review for this spot"
+        })
+    }
+
+    const newReview = await Review.create({
+        userId: user.id,
+        spotId: spot.id,
+        review,
+        stars
+    })
+
+    reviews.push(newReview)
+
+    res.status(201)
+    res.json(newReview)
 })
 
 router.get('/:spotId', async (req, res, next) => {
