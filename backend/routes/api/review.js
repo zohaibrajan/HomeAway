@@ -1,8 +1,6 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation')
 const sequelize = require('sequelize');
 
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -123,6 +121,18 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         url: newReviewImage.url
     })
 
+})
+
+router.put('/:reviewId', requireAuth, async(req, res, next) => {
+    const { user } = req
+    const review = await Review.findByPk(req.params.reviewId);
+
+    if (review.userId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: "Forbidden"
+        })
+    }
 })
 
 
