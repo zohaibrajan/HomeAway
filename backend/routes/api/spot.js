@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Spot, SpotImage, Review, User } = require('../../db/models');
+const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
@@ -169,7 +169,21 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     for (let i = 0; i < reviewsJSON.length; i++) {
         const review = reviewsJSON[i];
 
-        const user = 
+        const user = await User.findByPk(review.userId, {
+            attributes: {
+                exclude: ['username']
+            }
+        })
+
+        review.User = user;
+
+        const reviewImages = await ReviewImage.findByPk(review.id, {
+            attributes: {
+                exclude: ['reviewId']
+            }
+        });
+
+        review.ReviewImages = reviewImages
     }
 
     res.json({
