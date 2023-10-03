@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Spot, SpotImage, Review, User } = require('../../db/models');
+const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation')
@@ -148,6 +148,49 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 })
 
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        res.status(404);
+        return res.json({
+        message: "Spot couldn't be found"
+        })
+    }
+
+    const reviews = await spot.getReviews({
+        attributes: {
+            include: ['createdAt', 'updatedAt']
+        }
+    });
+
+    const reviewsJSON = reviews.map(review => review.toJSON());
+
+    for (let i = 0; i < reviewsJSON.length; i++) {
+        const review = reviewsJSON[i];
+
+        const user = await User.findByPk(review.userId, {
+            attributes: {
+                exclude: ['username']
+            }
+        })
+
+        review.User = user;
+
+        const reviewImages = await ReviewImage.findByPk(review.id, {
+            attributes: {
+                exclude: ['reviewId']
+            }
+        });
+
+        review.ReviewImages = reviewImages
+    }
+
+    res.json({
+        Reviews: reviewsJSON
+    })
+})
+
 router.get('/:spotId', async (req, res, next) => {
   const { spotId } = req.params;
 
@@ -196,6 +239,7 @@ router.get('/:spotId', async (req, res, next) => {
   res.json(spotJSON)
 
 })
+
 
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     const { address, city, state, country, lat, lng, name,
