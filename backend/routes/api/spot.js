@@ -4,7 +4,7 @@ const { requireAuth } = require('../../utils/auth');
 const { validateReview, validateSpot, validateEndDate } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 const review = require('../../db/models/review');
-const { dateValidationMiddleware } = require('../../utils/validation');
+const { dateValidationMiddleware, bookingValidationMiddleware } = require('../../utils/validation');
 
 
 router.get('/', async (req, res, next) => {
@@ -167,22 +167,9 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     });
 });
 
-router.post('/:spotId/bookings', requireAuth, dateValidationMiddleware, async (req, res, next) => {
-    const { user } = req
+router.post('/:spotId/bookings', requireAuth, dateValidationMiddleware,
+bookingValidationMiddleware, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
-
-    if (!spot) {
-        res.status(404);
-        return res.json({
-            message: "Spot couldn't be found"
-        })
-    }
-    if (spot.ownerId === user.id) {
-        res.status(403);
-        return res.json({
-            message: 'Forbidden'
-        })
-    }
 
     const { startDate, endDate } = req.body
 
