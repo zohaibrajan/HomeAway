@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { validateReview, validateSpot } = require('../../utils/instanceValidators')
+const { validateReview, validateSpot, validateEndDate } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 const review = require('../../db/models/review');
 
@@ -164,6 +164,10 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     res.json({
         Bookings: bookings
     });
+});
+
+router.post('/:spotId/bookings', requireAuth,  validateEndDate, async (req, res, next) => {
+
 })
 
 router.get('/:spotId/reviews', async (req, res, next) => {
