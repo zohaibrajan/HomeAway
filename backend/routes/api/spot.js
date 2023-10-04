@@ -118,6 +118,54 @@ router.get('/current', requireAuth, async (req, res, next) => {
     });
 })
 
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const { user } = req;
+    const spot = await Spot.findByPk(req.params.spotId);
+
+    if (!spot) {
+        res.status(404);
+        return res.json({
+            message: "Spot couldn't be found"
+        })
+    }
+
+    if (spot.ownerId === user.id) {
+        const bookings = await spot.getBookings({
+            attributes: {
+                include: ['createdAt', 'updatedAt']
+            }
+        });
+
+        const bookingsJSON = bookings.map(booking => booking.toJSON());
+
+        for (let i = 0; i < bookingsJSON.length; i++) {
+            const booking = bookingsJSON[i];
+
+            const user = await User.findByPk(booking.userId, {
+                attributes: {
+                    exclude: ['username']
+                }
+            });
+
+            booking.User = user
+        }
+
+        return res.json({
+            Bookings: bookingsJSON
+        });
+    }
+
+    const bookings = await spot.getBookings({
+        attributes: {
+            exclude: ['id', 'userId']
+        }
+    });
+
+    res.json({
+        Bookings: bookings
+    });
+})
+
 router.get('/:spotId/reviews', async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
 
