@@ -81,7 +81,6 @@ const bookingValidationMiddleware = async (req, res, next) => {
   });
 
 
-  // res.json(bookings)
   for (let i = 0; i < bookings.length; i++) {
     const booking = bookings[i]
     const startDate = new Date(booking.startDate);

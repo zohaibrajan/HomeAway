@@ -1,10 +1,11 @@
 const router = require('express').Router();
-const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
+const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
 const { validateReview, validateSpot, validateEndDate } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 const review = require('../../db/models/review');
 const { dateValidationMiddleware, bookingValidationMiddleware } = require('../../utils/validation');
+const { updateLocale } = require('moment');
 
 
 router.get('/', async (req, res, next) => {
@@ -170,10 +171,25 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 router.post('/:spotId/bookings', requireAuth, dateValidationMiddleware,
 bookingValidationMiddleware, async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
+    const { user } = req
 
     const { startDate, endDate } = req.body
 
-    res.json('STOP')
+    const newBooking = await Booking.create({
+        spotId: spot.id,
+        userId: user.id,
+        startDate,
+        endDate
+    });
+
+    res.json({
+        id: newBooking.id,
+        spotId: newBooking.spotId,
+        startDate: newBooking.startDate.toLocaleDateString(),
+        endDate: newBooking.endDate.toLocaleDateString(),
+        createdAt: newBooking.createdAt,
+        updatedAt: newBooking.updatedAt
+    });
 })
 
 router.get('/:spotId/reviews', async (req, res, next) => {

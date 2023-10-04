@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
+const { dateValidationMiddleware, bookingValidationMiddleware } = require('../../utils/validation');
 const { validateReview, validateSpot } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 const review = require('../../db/models/review');
@@ -59,6 +60,11 @@ router.get('/current', requireAuth, async(req, res, next) => {
     res.json({
         Bookings: bookingsJSON
     })
+})
+
+router.put('/:bookindId', requireAuth, dateValidationMiddleware,
+bookingValidationMiddleware, async (req, res, next) => {
+
 })
 
 
