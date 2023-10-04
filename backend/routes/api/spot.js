@@ -18,7 +18,6 @@ router.get('/', async (req, res, next) => {
         ]
     });
 
-
     const spotsJSON = spots.map(spot => spot.toJSON());
 
     for (let i = 0; i < spotsJSON.length; i++) {

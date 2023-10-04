@@ -86,6 +86,12 @@ const bookingValidationMiddleware = async (req, res, next) => {
     const startDate = new Date(booking.startDate);
     const endDate = new Date(booking.endDate);
 
+    if (moment(newStartDate).isSame(startDate)) {
+      err.errors.startDate = "Start date conflicts with an existing booking"
+    }
+    if (moment(newEndDate).isSame(endDate)){
+      err.errors.endDate = "End date conflicts with an existing booking"
+    }
     if (moment(newStartDate).isBetween(startDate, endDate)) {
       err.errors.startDate = "Start date conflicts with an existing booking"
     }
