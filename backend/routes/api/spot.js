@@ -166,7 +166,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     });
 });
 
-router.post('/:spotId/bookings', requireAuth, validateEndDate, async (req, res, next) => {
+router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const { user } = req
     const spot = await Spot.findByPk(req.params.spotId);
 
@@ -247,11 +247,19 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async(req, res, nex
         })
     }
 
+    if (spot.ownerId === user.id) {
+        res.status(403);
+        return res.json({
+            message: 'Forbidden'
+        })
+    }
+
     const reviews = await spot.getReviews()
 
     const userReview = await Review.findOne({
         where: {
-            userId: user.id
+            userId: user.id,
+            spotId: spot.id
         }
     })
 

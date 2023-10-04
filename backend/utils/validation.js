@@ -19,6 +19,29 @@ const handleValidationErrors = (req, _res, next) => { // formats the error messa
   next();
 }
 
+const dateValidationMiddleware = (req, res, next) => {
+  const startDate = new Date(req.body.startDate);
+  const endDate = new Date(req.body.endDate);
+  const currentDate = new Date();
+
+  const errors = {};
+
+  if (startDate <= currentDate) {
+    return res.status(400).json(
+        { error: 'Start date must be in the future' }
+    );
+  }
+
+  if (endDate <= startDate) {
+    return res.status(400).json(
+        { error: 'End date must be after start date' }
+    );
+  }
+
+  next();
+};
+
 module.exports = {
-  handleValidationErrors
+  handleValidationErrors,
+  dateValidationMiddleware
 };

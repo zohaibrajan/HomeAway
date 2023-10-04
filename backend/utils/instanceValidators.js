@@ -1,28 +1,6 @@
 const { handleValidationErrors } = require('./validation');
 const { check } = require('express-validator');
 
-const dateValidationMiddleware = (req, res, next) => {
-  const startDate = new Date(req.body.startDate);
-  const endDate = new Date(req.body.endDate);
-  const currentDate = new Date();
-
-  const errors = {};
-
-  if (startDate <= currentDate) {
-    res.status(400).json(
-        { error: 'Start date must be in the future' }
-    );
-  }
-
-  if (endDate <= startDate) {
-    res.status(400).json(
-        { error: 'End date must be after start date' }
-    );
-  }
-
-  next();
-};
-
 const validators = {
     validateSpot: [
         check('address')
@@ -63,15 +41,6 @@ const validators = {
         check("stars")
             .exists({checkFalsy: true})
             .withMessage("Stars must be an integer from 1 to 5"),
-        handleValidationErrors
-    ],
-
-    validateEndDate: [
-        check("startDate")
-            .exists({checkFalsy: true}),
-        check("endDate")
-            .exists({checkFalsy: true}),
-        dateValidationMiddleware,
         handleValidationErrors
     ]
 }
