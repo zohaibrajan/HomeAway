@@ -4,7 +4,7 @@ const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { validateReview } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 
-router.get('/current', requireAuth, async (req, res, next) => {
+router.get('/current', requireAuth, async (req, res, _next) => {
     const { user } = req;
 
     const reviews = await Review.unscoped().findAll({
@@ -82,7 +82,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 })
 
-router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+router.post('/:reviewId/images', requireAuth, async (req, res, _next) => {
     const { user } = req
     const review = await Review.findByPk(req.params.reviewId);
 
@@ -124,7 +124,7 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
 
 })
 
-router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
+router.put('/:reviewId', requireAuth, validateReview, async(req, res, _next) => {
     const { user } = req
     const currReview = await Review.unscoped().findByPk(req.params.reviewId);
 
@@ -152,7 +152,7 @@ router.put('/:reviewId', requireAuth, validateReview, async(req, res, next) => {
     res.json(currReview)
 });
 
-router.delete('/:reviewId', requireAuth, async(req, res, next) => {
+router.delete('/:reviewId', requireAuth, async(req, res, _next) => {
     const { user } = req
     const review = await Review.findByPk(req.params.reviewId);
 

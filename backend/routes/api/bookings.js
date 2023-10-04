@@ -9,7 +9,7 @@ const moment = require('moment')
 
 
 
-router.get('/current', requireAuth, async(req, res, next) => {
+router.get('/current', requireAuth, async(req, res, _next) => {
     const { user } = req;
 
     const bookings = await Booking.unscoped().findAll({
@@ -64,7 +64,7 @@ router.get('/current', requireAuth, async(req, res, next) => {
 })
 
 router.put('/:bookingId', requireAuth, dateValidationMiddleware, editBookingValidation,
-async (req, res, next) => {
+async (req, res, _next) => {
     const booking = await Booking.findByPk(req.params.bookingId)
     const spot = await Spot.findByPk(booking.spotId)
 
@@ -79,7 +79,7 @@ async (req, res, next) => {
 
 });
 
-router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+router.delete('/:bookingId', requireAuth, async (req, res, _next) => {
     const { user } = req;
     const booking = await Booking.findByPk(req.params.bookingId);
     const currentDate = new Date();
