@@ -1,10 +1,11 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { dateValidationMiddleware, bookingValidationMiddleware } = require('../../utils/validation');
+const { dateValidationMiddleware, editBookingValidation } = require('../../utils/validation');
 const { validateReview, validateSpot } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 const review = require('../../db/models/review');
+const moment = require('moment')
 
 
 
@@ -60,6 +61,71 @@ router.get('/current', requireAuth, async(req, res, next) => {
     res.json({
         Bookings: bookingsJSON
     })
+})
+
+router.put('/:bookingId', requireAuth, dateValidationMiddleware, editBookingValidation,
+async (req, res, next) => {
+    const booking = await Booking.findByPk(req.params.bookingId)
+    const spot = await Spot.findByPk(booking.spotId)
+
+    const { startDate, endDate } = req.body;
+
+    booking.startDate = startDate;
+    booking.endDate = endDate;
+
+    await booking.save();
+
+    res.json(booking)
+
+});
+
+router.delete('/:bookingId', requireAuth, async (req, res, next) => {
+    const { user } = req;
+    const booking = await Booking.findByPk(req.params.bookingId);
+    const currentDate = new Date();
+
+    if (!booking) {
+        res.status(404);
+        return res.json({
+            message: "Booking couldn't be found"
+        })
+    }
+
+    if (booking.userId !== user.id) {
+        res.status(403);
+        return res.json({
+            message: 'Forbidden'
+        })
+    }
+
+    if (moment(currentDate).isAfter(booking.endDate)){
+        res.status(403);
+        return res.json({
+            message: "Booking already complete"
+        })
+    }
+
+    if (moment(currentDate).isBetween(booking.startDate, booking.endDate)) {
+        res.status(403);
+        return res.json({
+            message: "Bookings that have been started can't be deleted"
+        })
+    }
+
+    if (moment(currentDate).isSame(booking.startDate) || moment(currentDate).isSame(booking.endDate)) {
+        res.status(403);
+        return res.json({
+            message: "Bookings that have been started can't be deleted"
+        })
+    }
+
+    await booking.destroy();
+
+    res.json({
+        message: "Successfully deleted"
+    })
+
+
 })
 
 
