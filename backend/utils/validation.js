@@ -113,7 +113,7 @@ const editBookingValidation = async (req, res, next) => {
 
   if (!booking) {
       res.status(404);
-      return res.status({
+      return res.json({
           message: "Booking couldn't be found"
       })
   }
