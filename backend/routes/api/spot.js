@@ -177,7 +177,7 @@ router.post('/:spotId/bookings', requireAuth, dateValidationMiddleware, async (r
             message: "Spot couldn't be found"
         })
     }
-    if (spot.ownerId = user.id) {
+    if (spot.ownerId === user.id) {
         res.status(403);
         return res.json({
             message: 'Forbidden'
