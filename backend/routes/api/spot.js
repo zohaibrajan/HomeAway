@@ -4,6 +4,7 @@ const { requireAuth } = require('../../utils/auth');
 const { validateReview, validateSpot, validateEndDate } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 const review = require('../../db/models/review');
+const { dateValidationMiddleware } = require('../../utils/validation');
 
 
 router.get('/', async (req, res, next) => {
@@ -166,7 +167,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     });
 });
 
-router.post('/:spotId/bookings', requireAuth, async (req, res, next) => {
+router.post('/:spotId/bookings', requireAuth, dateValidationMiddleware, async (req, res, next) => {
     const { user } = req
     const spot = await Spot.findByPk(req.params.spotId);
 

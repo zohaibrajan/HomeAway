@@ -24,21 +24,25 @@ const dateValidationMiddleware = (req, res, next) => {
   const endDate = new Date(req.body.endDate);
   const currentDate = new Date();
 
-  const errors = {};
+  const errors = {
+    error: {}
+  };
+
+  errors.message = 'Bad Request'
+  errors.status = 400
 
   if (startDate <= currentDate) {
-    return res.status(400).json(
-        { error: 'Start date must be in the future' }
-    );
+    errors.error.startDate = 'Start date must be in the future'
   }
 
   if (endDate <= startDate) {
-    return res.status(400).json(
-        { error: 'End date must be after start date' }
-    );
+    errors.error.endDate = "endDate cannot be on or before startDate"
   }
 
-  next();
+  if (errors.error) next(errors);
+
+  
+  next()
 };
 
 module.exports = {
