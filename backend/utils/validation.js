@@ -20,7 +20,7 @@ const handleValidationErrors = (req, _res, next) => { // formats the error messa
   next();
 }
 
-const dateValidationMiddleware = (req, res, next) => {
+const dateValidationMiddleware = (req, _res, next) => {
   const startDate = new Date(req.body.startDate);
   const endDate = new Date(req.body.endDate);
   const currentDate = new Date();
@@ -106,8 +106,74 @@ const bookingValidationMiddleware = async (req, res, next) => {
   next()
 }
 
+const editBookingValidation = async (req, res, next) => {
+  const { user } = req
+  const booking = await Booking.findByPk(req.params.bookingId)
+  const currentDate = new Date();
+
+  if (!booking) {
+      res.status(404);
+      return res.status({
+          message: "Booking couldn't be found"
+      })
+  }
+
+  if (booking.userId !== user.id) {
+      res.status(403);
+      return res.json({
+          message: 'Forbidden'
+      })
+  }
+
+  if (moment(booking.endDate).isBefore(currentDate) || moment(booking.startDate).isBefore(currentDate)) {
+      res.status(403);
+      return res.json({
+          message: "Past bookings can't be modified"
+      })
+  }
+
+  const { startDate, endDate } = req.body;
+  const newStartDate = startDate;
+  const newEndDate = endDate;
+
+  const err = {
+      errors: {}
+  }
+
+  err.status = 400;
+  err.message = "Sorry, this spot is already booked for the specified dates"
+
+  const spot = await Spot.findByPk(booking.spotId)
+  const spotBookings = await spot.getBookings();
+
+  for (let i = 0; i < spotBookings.length; i++) {
+      const booking = spotBookings[i]
+      const startDate = new Date(booking.startDate);
+      const endDate = new Date(booking.endDate);
+
+      if (moment(newStartDate).isSame(startDate)) {
+      err.errors.startDate = "Start date conflicts with an existing booking"
+      }
+      if (moment(newEndDate).isSame(endDate)){
+      err.errors.endDate = "End date conflicts with an existing booking"
+      }
+      if (moment(newStartDate).isBetween(startDate, endDate)) {
+      err.errors.startDate = "Start date conflicts with an existing booking"
+      }
+      if (moment(newEndDate).isBetween(startDate, endDate)) {
+      err.errors.endDate = "End date conflicts with an existing booking"
+      }
+
+  }
+
+  if (Object.keys(err.errors).length) next(err)
+
+  next()
+}
+
 module.exports = {
   handleValidationErrors,
   dateValidationMiddleware,
-  bookingValidationMiddleware
+  bookingValidationMiddleware,
+  editBookingValidation
 }
