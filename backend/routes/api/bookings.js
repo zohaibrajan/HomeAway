@@ -62,11 +62,6 @@ router.get('/current', requireAuth, async(req, res, next) => {
     })
 })
 
-router.put('/:bookindId', requireAuth, dateValidationMiddleware,
-bookingValidationMiddleware, async (req, res, next) => {
-
-})
-
 
 
 module.exports = router
