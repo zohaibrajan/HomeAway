@@ -42,6 +42,41 @@ const validators = {
             .exists({checkFalsy: true})
             .withMessage("Stars must be an integer from 1 to 5"),
         handleValidationErrors
+    ],
+
+    validateQuery: [
+        check("page")
+            .optional()
+            .isInt({ min: 1, max: 10 })
+            .withMessage("Page must be an integer between 1 and 10"),
+        check("size")
+            .optional()
+            .isInt({ min: 1, max: 20 })
+            .withMessage("Size must be an integer between 1 and 20"),
+        check("minLat")
+            .optional()
+            .isDecimal()
+            .withMessage("Minimum latitude must be a decimal"),
+        check("maxLat")
+            .optional()
+            .isDecimal()
+            .withMessage("Maximum latitude must be a decimal"),
+        check("minLng")
+            .optional()
+            .isDecimal()
+            .withMessage("Minimum longitude must be a decimal"),
+        check("maxLng")
+            .optional()
+            .isDecimal()
+            .withMessage("Maximum longitude must be a decimal"),
+        check("minPrice")
+            .optional()
+            .isDecimal({ min: 0 })
+            .withMessage("Minimum price must be a decimal greater than or equal to 0"),
+        check("maxPrice")
+            .optional()
+            .isDecimal({ min: 0 })
+            .withMessage("Maximum price must be a decimal greater than or equal to 0")
     ]
 }
 

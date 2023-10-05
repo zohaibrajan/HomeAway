@@ -1,21 +1,42 @@
 const router = require('express').Router();
 const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 const { requireAuth } = require('../../utils/auth');
-const { validateReview, validateSpot, validateEndDate } = require('../../utils/instanceValidators')
+const { validateReview, validateSpot, validateQuery } = require('../../utils/instanceValidators')
 const sequelize = require('sequelize');
 const review = require('../../db/models/review');
 const { dateValidationMiddleware, bookingValidationMiddleware } = require('../../utils/validation');
 const { updateLocale } = require('moment');
 
 
-router.get('/', async (_req, res, _next) => {
+router.get('/', validateQuery, async (req, res, _next) => {
+    const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
+    const whereObj = {}
+    const pagination = {};
+
+    if (minLat) whereObj.minLat = minLat;
+    if (maxLat) whereObj.maxLat = maxLat;
+    if (minLng) whereObj.minLng = minLng;
+    if (maxLng) whereObj.maxLng = maxLng;
+    if (minPrice) whereObj.minPrice = minPrice;
+    if (maxPrice) whereObj.maxPrice = maxPrice;
+
+    if (!page) page = 1;
+    if (!size) size = 20;
+
+    pagination.limit = size;
+    pagination.offset = size * (page - 1);
+
     const spots = await Spot.findAll({
         include: [
             {
                 model: SpotImage,
                 attributes: ['url', 'preview']
             }
-        ]
+        ],
+        where: {
+            ...whereObj
+        },
+        ...pagination
     });
 
     const spotsJSON = spots.map(spot => spot.toJSON());
@@ -56,6 +77,7 @@ router.get('/', async (_req, res, _next) => {
         }
         delete spot.SpotImages
     }
+
 
     res.json({
         Spots: spotsJSON
@@ -163,7 +185,9 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, _next) => {
     });
 
     res.json({
-        Bookings: bookings
+        Bookings: bookings,
+        page: page,
+        size: size
     });
 });
 
