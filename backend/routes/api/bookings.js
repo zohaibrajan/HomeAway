@@ -84,16 +84,17 @@ router.delete('/:bookingId', requireAuth, async (req, res, _next) => {
     const booking = await Booking.findByPk(req.params.bookingId);
     const currentDate = new Date();
 
-    const spot = await Spot.findByPk(booking.spotId)
-
-    const owner = await User.findByPk(spot.ownerId);
-
     if (!booking) {
         res.status(404);
         return res.json({
             message: "Booking couldn't be found"
         })
     }
+    
+    const spot = await Spot.findByPk(booking.spotId)
+
+    const owner = await User.findByPk(spot.ownerId);
+
 
     if (booking.userId !== user.id && owner.id !== user.id) {
         res.status(403);
