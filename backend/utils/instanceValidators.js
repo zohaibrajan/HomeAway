@@ -48,35 +48,36 @@ const validators = {
         check("page")
             .optional()
             .isInt({ min: 1, max: 10 })
-            .withMessage("Page must be an integer between 1 and 10"),
+            .withMessage("Page must be greater than or equal to 1"),
         check("size")
             .optional()
             .isInt({ min: 1, max: 20 })
-            .withMessage("Size must be an integer between 1 and 20"),
+            .withMessage("Size must be greater than or equal to 1"),
         check("minLat")
             .optional()
-            .isDecimal()
-            .withMessage("Minimum latitude must be a decimal"),
+            .isFloat(({ min: -90.0000000, max: 90.0000000 }))
+            .withMessage("Minimum latitude is invalid"),
         check("maxLat")
             .optional()
-            .isDecimal()
-            .withMessage("Maximum latitude must be a decimal"),
+            .isFloat(({ min: -90.0000000, max: 90.0000000 }))
+            .withMessage("Maximum latitude is invalid"),
         check("minLng")
             .optional()
-            .isDecimal()
-            .withMessage("Minimum longitude must be a decimal"),
+            .isFloat(({ min: -180.0000000, max: 180.0000000 }))
+            .withMessage("Minimum longitude is invalid"),
         check("maxLng")
             .optional()
-            .isDecimal()
-            .withMessage("Maximum longitude must be a decimal"),
+            .isFloat({ min: -180.0000000, max: 180.0000000 })
+            .withMessage("Maximum longitude is invalid"),
         check("minPrice")
             .optional()
-            .isDecimal({ min: 0 })
-            .withMessage("Minimum price must be a decimal greater than or equal to 0"),
+            .isFloat({ min: 0 })
+            .withMessage("Minimum price must be greater than or equal to 0"),
         check("maxPrice")
             .optional()
-            .isDecimal({ min: 0 })
-            .withMessage("Maximum price must be a decimal greater than or equal to 0")
+            .isFloat({ min: 0 })
+            .withMessage("Maximum price must be greater than or equal to 0"),
+        handleValidationErrors
     ]
 }
 

@@ -6,19 +6,20 @@ const sequelize = require('sequelize');
 const review = require('../../db/models/review');
 const { dateValidationMiddleware, bookingValidationMiddleware } = require('../../utils/validation');
 const { updateLocale } = require('moment');
+const { Op } = require("sequelize")
 
 
 router.get('/', validateQuery, async (req, res, _next) => {
-    const { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
+    let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice} = req.query
     const whereObj = {}
     const pagination = {};
 
-    if (minLat) whereObj.minLat = minLat;
-    if (maxLat) whereObj.maxLat = maxLat;
-    if (minLng) whereObj.minLng = minLng;
-    if (maxLng) whereObj.maxLng = maxLng;
-    if (minPrice) whereObj.minPrice = minPrice;
-    if (maxPrice) whereObj.maxPrice = maxPrice;
+    if (minLat) whereObj.lat = {[Op.gte]: minLat};
+    if (maxLat) whereObj.lat = {[Op.lte]: maxLat};
+    if (minLng) whereObj.lng = {[Op.gte]: minLng};
+    if (maxLng) whereObj.lng = {[Op.lte]: maxLng};
+    if (minPrice) whereObj.price = {[Op.gte]: minPrice};
+    if (maxPrice) whereObj.price = {[Op.lte]: maxPrice};
 
     if (!page) page = 1;
     if (!size) size = 20;
@@ -80,7 +81,9 @@ router.get('/', validateQuery, async (req, res, _next) => {
 
 
     res.json({
-        Spots: spotsJSON
+        Spots: spotsJSON,
+        page: Number(page),
+        size: Number(size)
     });
 })
 
@@ -185,9 +188,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, _next) => {
     });
 
     res.json({
-        Bookings: bookings,
-        page: page,
-        size: size
+        Bookings: bookings
     });
 });
 
