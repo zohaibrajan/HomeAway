@@ -26,7 +26,7 @@ const validators = {
         check("name")
             .exists({ checkFalsy: true })
             .isString()
-            .isLength({max: 50})
+            .isLength({max: 49})
             .withMessage("Name must be less than 50 characters"),
         check("description")
             .exists({ checkFalsy: true })
