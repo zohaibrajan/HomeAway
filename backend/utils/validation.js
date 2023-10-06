@@ -106,6 +106,11 @@ const bookingValidationMiddleware = async (req, res, next) => {
       err.errors.endDate = "End date conflicts with an existing booking"
     }
 
+    if (moment(newStartDate).isBefore(startDate) && moment(newEndDate).isAfter(endDate)) {
+      err.errors.startDate = "Start date conflicts with an existing booking";
+      err.errors.endDate = "End date conflicts with an existing booking"
+    }
+
   }
 
   if (Object.keys(err.errors).length) next(err);
@@ -164,6 +169,7 @@ const editBookingValidation = async (req, res, next) => {
       const startDate = new Date(booking.startDate);
       const endDate = new Date(booking.endDate);
 
+
       if (moment(newStartDate).isSame(startDate)) {
       err.errors.startDate = "Start date conflicts with an existing booking"
       }
@@ -175,7 +181,7 @@ const editBookingValidation = async (req, res, next) => {
       }
       if (moment(newEndDate).isSame(startDate)){
       err.errors.endDate = "End date conflicts with an existing booking"
-    }
+      }
       if (moment(newStartDate).isBetween(startDate, endDate)) {
       err.errors.startDate = "Start date conflicts with an existing booking"
       }
