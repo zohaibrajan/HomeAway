@@ -65,7 +65,7 @@ router.get('/current', requireAuth, async(req, res, _next) => {
 
 router.put('/:bookingId', requireAuth, dateValidationMiddleware, editBookingValidation,
 async (req, res, _next) => {
-    const booking = await Booking.findByPk(req.params.bookingId)
+    const booking = await Booking.unscoped().findByPk(req.params.bookingId)
     const spot = await Spot.findByPk(booking.spotId)
 
     const { startDate, endDate } = req.body;

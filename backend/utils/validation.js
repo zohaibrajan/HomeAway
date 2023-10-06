@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator');
-const { Booking, Spot } = require('../db/models')
+const { Booking, Spot } = require('../db/models');
+const { Op } = require('sequelize')
 const moment = require('moment')
 
 const handleValidationErrors = (req, _res, next) => { // formats the error message
@@ -89,7 +90,13 @@ const bookingValidationMiddleware = async (req, res, next) => {
     if (moment(newStartDate).isSame(startDate)) {
       err.errors.startDate = "Start date conflicts with an existing booking"
     }
+    if (moment(newStartDate).isSame(endDate)) {
+      err.errors.startDate = "Start date conflicts with an existing booking"
+    }
     if (moment(newEndDate).isSame(endDate)){
+      err.errors.endDate = "End date conflicts with an existing booking"
+    }
+    if (moment(newEndDate).isSame(startDate)){
       err.errors.endDate = "End date conflicts with an existing booking"
     }
     if (moment(newStartDate).isBetween(startDate, endDate)) {
@@ -125,7 +132,7 @@ const editBookingValidation = async (req, res, next) => {
       })
   }
 
-  if (moment(booking.endDate).isBefore(currentDate) || moment(booking.startDate).isBefore(currentDate)) {
+  if (moment(booking.endDate).isBefore(currentDate)) {
       res.status(403);
       return res.json({
           message: "Past bookings can't be modified"
@@ -144,7 +151,13 @@ const editBookingValidation = async (req, res, next) => {
   err.message = "Sorry, this spot is already booked for the specified dates"
 
   const spot = await Spot.findByPk(booking.spotId)
-  const spotBookings = await spot.getBookings();
+  const spotBookings = await spot.getBookings({
+    where: {
+      id: {
+        [Op.not]: booking.id
+      }
+    }
+  });
 
   for (let i = 0; i < spotBookings.length; i++) {
       const booking = spotBookings[i]
@@ -154,9 +167,15 @@ const editBookingValidation = async (req, res, next) => {
       if (moment(newStartDate).isSame(startDate)) {
       err.errors.startDate = "Start date conflicts with an existing booking"
       }
+      if (moment(newStartDate).isSame(endDate)) {
+      err.errors.startDate = "Start date conflicts with an existing booking"
+      }
       if (moment(newEndDate).isSame(endDate)){
       err.errors.endDate = "End date conflicts with an existing booking"
       }
+      if (moment(newEndDate).isSame(startDate)){
+      err.errors.endDate = "End date conflicts with an existing booking"
+    }
       if (moment(newStartDate).isBetween(startDate, endDate)) {
       err.errors.startDate = "Start date conflicts with an existing booking"
       }

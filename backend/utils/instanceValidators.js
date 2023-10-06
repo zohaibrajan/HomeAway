@@ -17,18 +17,23 @@ const validators = {
             .withMessage("Country is required"),
         check("lat")
             .exists({ checkFalsy: true })
+            .isFloat(({ min: -90.0000000, max: 90.0000000 }))
             .withMessage("Latitude is not valid"),
         check("lng")
             .exists({ checkFalsy: true })
+            .isFloat(({ min: -180.0000000, max: 180.0000000 }))
             .withMessage("Longitude is not valid"),
         check("name")
             .exists({ checkFalsy: true })
+            .isString()
+            .isLength({max: 50})
             .withMessage("Name must be less than 50 characters"),
         check("description")
             .exists({ checkFalsy: true })
             .withMessage("Description is required"),
         check("price")
             .exists({ checkFalsy: true })
+            .isInt({min: 0})
             .withMessage("Price per day is required"),
         handleValidationErrors
     ],
@@ -37,9 +42,11 @@ const validators = {
         check("review")
             .exists({checkFalsy: true})
             .isString()
+            .notEmpty()
             .withMessage("Review text is required"),
         check("stars")
             .exists({checkFalsy: true})
+            .isInt({min: 1, max: 5})
             .withMessage("Stars must be an integer from 1 to 5"),
         handleValidationErrors
     ],
