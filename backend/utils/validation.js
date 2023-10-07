@@ -188,6 +188,10 @@ const editBookingValidation = async (req, res, next) => {
       if (moment(newEndDate).isBetween(startDate, endDate)) {
       err.errors.endDate = "End date conflicts with an existing booking"
       }
+      if (moment(newStartDate).isBefore(startDate) && moment(newEndDate).isAfter(endDate)) {
+      err.errors.startDate = "Start date conflicts with an existing booking";
+      err.errors.endDate = "End date conflicts with an existing booking"
+    }
 
   }
 
