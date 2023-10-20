@@ -23,11 +23,9 @@ const validateSignup = [
     .withMessage('Username cannot be an email.'),
   check('firstName')
     .exists({ checkFalsy: true })
-    .isAlpha()
     .withMessage('First Name is required'),
   check('lastName')
     .exists({checkFalse: true})
-    .isAlpha()
     .withMessage('Last Name is required'),
   check('password')
     .exists({ checkFalsy: true })
