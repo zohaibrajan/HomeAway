@@ -19,18 +19,31 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await SpotImage.bulkCreate([
-    {
-      spotId: 1,
-      url: 'https://square-realestate.com/properties/1008-mcconnell-drive-decatur-ga-30033-7156284',
-      preview: true
-    },
-    {
-      spotId: 2,
-      url: 'https://square-realestate.com/properties/2701-lovejoy-circle-duluth-ga-30097-8901220',
-      preview: false
-    }
-   ], { validate: true })
+   await SpotImage.bulkCreate(
+     [
+       {
+         spotId: 1,
+         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         preview: true,
+       },
+       {
+         spotId: 2,
+         url: "https://photos.zillowstatic.com/fp/0b9a2e88187802bd8dba8b5e50860802-cc_ft_768.webp",
+         preview: true,
+       },
+       {
+         spotId: 3,
+         url: "https://parkandrefer.com/wp-content/uploads/2015/03/nice-house.png",
+         preview: true,
+       },
+       {
+         spotId: 4,
+         url: "https://images-ext-2.discordapp.net/external/zMh_bfEYGKb__n4WygR9gHGCOxuyvjAjWHpIhte6YFU/https/hips.hearstapps.com/hmg-prod/images/cayman-islands-villa-kempa-kai-2020-021-1616076929.jpg?width=785&height=523",
+         preview: true,
+       },
+     ],
+     { validate: true }
+   );
   },
 
   async down (queryInterface, Sequelize) {

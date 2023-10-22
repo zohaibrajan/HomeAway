@@ -19,32 +19,59 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await Spot.bulkCreate([
-    {
-      ownerId: 1,
-      address: "1008 McConnell",
-      city: "San Francisco",
-      state: "California",
-      country: "United States of America",
-      lat: 37.7645358,
-      lng: -122.4730327,
-      name: "App Academy",
-      description: "Place where web developers are created",
-      price: 123,
-    },
-    {
-      ownerId: 2,
-      address: "2701 Lovejoy Circle",
-      city: "Atlanta",
-      state: "Georgia",
-      country: "United States of America",
-      lat: 32.1234567,
-      lng: -150.4732307,
-      name: "App Academy 2",
-      description: "Place where web developers are created and robots",
-      price: 150,
-    }
-   ], { validate: true })
+   await Spot.bulkCreate(
+     [
+       {
+         ownerId: 1,
+         address: "1008 McConnell",
+         city: "San Francisco",
+         state: "California",
+         country: "United States of America",
+         lat: 37.7645358,
+         lng: -122.4730327,
+         name: "App Academy",
+         description: "Place where web developers are created",
+         price: 123,
+       },
+       {
+         ownerId: 2,
+         address: "2701 Lovejoy Circle",
+         city: "Atlanta",
+         state: "Georgia",
+         country: "United States of America",
+         lat: 32.1234567,
+         lng: -150.4732307,
+         name: "App Academy 2",
+         description: "Place where web developers are created and robots",
+         price: 150,
+       },
+       {
+         ownerId: 1,
+         address: "1010 Brian Way",
+         city: "Augusta",
+         state: "Georgia",
+         country: "United States of America",
+         lat: 32.1233567,
+         lng: -150.4732317,
+         name: "Brian",
+         description: "Brians Place",
+         price: 200,
+       },
+       {
+         ownerId: 2,
+         address: "11 Pingno Way",
+         city: "Dallas",
+         state: "Texas",
+         country: "United States of America",
+         lat: 31.1234567,
+         lng: -160.4732307,
+         name: "Peang",
+         description: "Peangs Place",
+         price: 150,
+       },
+     ],
+     { validate: true }
+   );
   },
 
   async down (queryInterface, Sequelize) {

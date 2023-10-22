@@ -8,10 +8,11 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <ul>
+    <ul className="nav-bar">
       <li>
-        <NavLink exact to="/">
-          Home
+        <NavLink className="nav-logo" exact to="/">
+          <img width="25px" height="25px" src="https://copasi.org/images/house.png" />
+          <p style={{ fontSize: "17px", color: "red", fontFamily: "Avenir", fontWeight: "600" }}>HomeAway</p>
         </NavLink>
       </li>
       {isLoaded && (

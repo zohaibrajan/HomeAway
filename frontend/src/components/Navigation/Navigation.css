@@ -2,6 +2,66 @@
     display: none;
 }
 
-.profile-dropdown {
+.nav-bar {
     list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #d8d8d8;
+}
+
+.profile-button {
+    border: 1px solid #656565;
+    background-color: transparent;
+    padding: 8px 10px;
+    justify-content: space-around;
+    border-radius: 25px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.profile-button:hover {
+    background-color: #e8e8e8;
+}
+
+.profile-icons {
+    margin-left: 7px;
+    color: #656565;
+}
+
+.profile-dropdown {
+    z-index: 10;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px 0 10px 10px ;
+    position: absolute;
+    list-style-type: none;
+    width: fit-content;
+    top: 70px;
+    right: 10px;
+    border: 1px solid #656565;
+    min-width: 150px;
+    font-family: "Avenir";
+    font-weight: 500;
+}
+
+#profile-logout {
+    justify-content: center;
+}
+
+#logout-button {
+    justify-self: center;
+    background-color: #656565;
+    padding: 8px;
+    border-radius: 25px;
+    color: white
+}
+
+.nav-logo {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
 }
