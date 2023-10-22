@@ -15,14 +15,16 @@ function SpotDetailsPage() {
 
     if (!spot) return null
 
-    // console.log(spot)
+    console.log(spot)
 
     return (
         <>
+        <div className='spot-details'>
             <div className='spot-details-header'>
-                <h1>{spot.name}</h1>
-                <h3>{spot.city}. {spot.state}, {spot.country}</h3>
+                <h2 style={{marginBottom: "12px"}}>{spot.name}</h2>
+                <span>{spot.city}, {spot.state}, {spot.country}</span>
             </div>
+        </div>
         </>
     )
 }

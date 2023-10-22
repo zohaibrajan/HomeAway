@@ -27,6 +27,26 @@ module.exports = {
          preview: true,
        },
        {
+         spotId: 1,
+         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         preview: false,
+       },
+       {
+         spotId: 1,
+         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         preview: false,
+       },
+       {
+         spotId: 1,
+         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         preview: false,
+       },
+       {
+         spotId: 1,
+         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         preview: false,
+       },
+       {
          spotId: 2,
          url: "https://photos.zillowstatic.com/fp/0b9a2e88187802bd8dba8b5e50860802-cc_ft_768.webp",
          preview: true,
