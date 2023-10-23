@@ -19,20 +19,29 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
     */
-   await Review.bulkCreate([
-    {
-      spotId: 2,
-      userId: 1,
-      review: 'Solid, amazing time',
-      stars: 5
-    },
-    {
-      spotId: 1,
-      userId: 3,
-      review: 'Do not come here',
-      stars: 1
-    }
-   ], { validate: true })
+   await Review.bulkCreate(
+     [
+       {
+         spotId: 2,
+         userId: 1,
+         review: "Solid, amazing time",
+         stars: 5,
+       },
+       {
+         spotId: 1,
+         userId: 3,
+         review: "Do not come here",
+         stars: 1,
+       },
+       {
+         spotId: 1,
+         userId: 2,
+         review: "Awesome",
+         stars: 5,
+       },
+     ],
+     { validate: true }
+   );
   },
 
   async down (queryInterface, Sequelize) {

@@ -77,9 +77,49 @@ module.exports = {
          preview: true,
        },
        {
+         spotId: 3,
+         url: "https://freepngimg.com/thumb/house/155703-house-modern-free-png-hq.png",
+         preview: false,
+       },
+       {
+         spotId: 3,
+         url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
+         preview: false,
+       },
+       {
+         spotId: 3,
+         url: "https://freepngimg.com/thumb/house/1-2-construction-building-png.png",
+         preview: false,
+       },
+       {
+         spotId: 3,
+         url: "https://freepngimg.com/thumb/house/25561-2-house-image.png",
+         preview: false,
+       },
+       {
          spotId: 4,
          url: "https://images-ext-2.discordapp.net/external/zMh_bfEYGKb__n4WygR9gHGCOxuyvjAjWHpIhte6YFU/https/hips.hearstapps.com/hmg-prod/images/cayman-islands-villa-kempa-kai-2020-021-1616076929.jpg?width=785&height=523",
          preview: true,
+       },
+       {
+         spotId: 4,
+         url: "https://freepngimg.com/thumb/house/155703-house-modern-free-png-hq.png",
+         preview: false,
+       },
+       {
+         spotId: 4,
+         url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
+         preview: false,
+       },
+       {
+         spotId: 4,
+         url: "https://freepngimg.com/thumb/house/1-2-construction-building-png.png",
+         preview: false,
+       },
+       {
+         spotId: 4,
+         url: "https://freepngimg.com/thumb/house/25561-2-house-image.png",
+         preview: false,
        },
      ],
      { validate: true }
