@@ -16,7 +16,7 @@ function SpotDetailsPage() {
 
     if (!spot?.Owner) return null
 
-    console.log(spot)
+    // console.log(spot)
 
     return (
       <>
@@ -27,12 +27,21 @@ function SpotDetailsPage() {
               {spot.city}, {spot.state}, {spot.country}
             </span>
           </div>
-          <div className="spot-details-image">
-            <img className="first-img" src={spot.SpotImages[0].url} />
-            <img className="second-img" src={spot.SpotImages[1].url} />
-            <img className="third-img" src={spot.SpotImages[2].url} />
-            <img className="fourth-img" src={spot.SpotImages[3].url} />
-            <img className="fifth-img" src={spot.SpotImages[4].url} />
+          <div className="spot-details-images">
+            <img className="small-image first-img" src={spot.SpotImages[0].url} />
+            <img
+              className="small-image second-img"
+              src={spot.SpotImages[1].url}
+            />
+            <img className="small-image third-img" src={spot.SpotImages[2].url} />
+            <img
+              className="small-image fourth-img"
+              src={spot.SpotImages[3].url}
+            />
+            <img className="small-image fifth-img" src={spot.SpotImages[4].url} />
+          </div>
+          <div>
+            
           </div>
         </div>
       </>
