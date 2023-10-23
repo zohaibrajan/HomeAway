@@ -13,20 +13,30 @@ function SpotDetailsPage() {
         dispatch(getASpotThunk(spotId));
     }, [dispatch])
 
-    if (!spot) return null
+
+    if (!spot?.Owner) return null
 
     console.log(spot)
 
     return (
-        <>
-        <div className='spot-details'>
-            <div className='spot-details-header'>
-                <h2 style={{marginBottom: "12px"}}>{spot.name}</h2>
-                <span>{spot.city}, {spot.state}, {spot.country}</span>
-            </div>
+      <>
+        <div className="spot-details">
+          <div className="spot-details-header">
+            <h2 style={{ marginBottom: "12px" }}>{spot.name}</h2>
+            <span>
+              {spot.city}, {spot.state}, {spot.country}
+            </span>
+          </div>
+          <div className="spot-details-image">
+            <img className="first-img" src={spot.SpotImages[0].url} />
+            <img className="second-img" src={spot.SpotImages[1].url} />
+            <img className="third-img" src={spot.SpotImages[2].url} />
+            <img className="fourth-img" src={spot.SpotImages[3].url} />
+            <img className="fifth-img" src={spot.SpotImages[4].url} />
+          </div>
         </div>
-        </>
-    )
+      </>
+    );
 }
 
 export default SpotDetailsPage

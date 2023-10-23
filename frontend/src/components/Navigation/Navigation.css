@@ -30,10 +30,9 @@
 }
 
 .profile-dropdown {
+    padding: 0;
     z-index: 10;
     background-color: white;
-    border-radius: 10px;
-    padding: 10px 0 10px 10px ;
     position: absolute;
     list-style-type: none;
     width: fit-content;
@@ -49,13 +48,24 @@
     justify-content: center;
 }
 
-#logout-button {
-    justify-self: center;
-    background-color: #656565;
-    padding: 8px;
-    border-radius: 25px;
-    color: white
+.profile-elements-loggedIn {
+    padding: 7px 10px 5px 10px;
 }
+
+#logout-button {
+    background-color: #656565;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    align-self: center;
+    cursor: pointer;
+    box-shadow: 3px 3px 3px #000000;
+}
+
+#logout-button:hover {
+    box-shadow: none;
+}
+
 
 .nav-logo {
     display: flex;
@@ -64,4 +74,19 @@
     align-items: center;
     gap: 5px;
     cursor: pointer;
+}
+
+.profile-elements {
+    cursor: pointer;
+    padding: 7px 10px 5px 10px;
+}
+
+.profile-elements:hover {
+    background-color: #e8e8e8;
+}
+
+#profile-elements-logout-button {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
 }

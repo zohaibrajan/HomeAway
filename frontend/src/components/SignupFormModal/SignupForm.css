@@ -1,0 +1,21 @@
+.signup-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    width: 250px;
+    font-family: "Avenir";
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.signup-form >label {
+    display: flex;
+    flex-direction: column;
+}

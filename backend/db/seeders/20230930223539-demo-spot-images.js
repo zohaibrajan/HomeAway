@@ -28,28 +28,48 @@ module.exports = {
        },
        {
          spotId: 1,
-         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         url: "https://freepngimg.com/thumb/house/155703-house-modern-free-png-hq.png",
          preview: false,
        },
        {
          spotId: 1,
-         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
          preview: false,
        },
        {
          spotId: 1,
-         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         url: "https://freepngimg.com/thumb/house/1-2-construction-building-png.png",
          preview: false,
        },
        {
          spotId: 1,
-         url: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQSIa5VvMwTy4C4FaKW6fx9dq5QbM9Txfaxw8pALAJncCzRjea_",
+         url: "https://freepngimg.com/thumb/house/25561-2-house-image.png",
          preview: false,
        },
        {
          spotId: 2,
          url: "https://photos.zillowstatic.com/fp/0b9a2e88187802bd8dba8b5e50860802-cc_ft_768.webp",
          preview: true,
+       },
+       {
+         spotId: 2,
+         url: "https://freepngimg.com/thumb/house/155703-house-modern-free-png-hq.png",
+         preview: false,
+       },
+       {
+         spotId: 2,
+         url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
+         preview: false,
+       },
+       {
+         spotId: 2,
+         url: "https://freepngimg.com/thumb/house/1-2-construction-building-png.png",
+         preview: false,
+       },
+       {
+         spotId: 2,
+         url: "https://freepngimg.com/thumb/house/25561-2-house-image.png",
+         preview: false,
        },
        {
          spotId: 3,

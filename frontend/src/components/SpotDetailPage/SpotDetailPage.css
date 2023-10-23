@@ -1,7 +1,50 @@
 .spot-details {
-    margin: 10px 50px;
+    margin: 10px 4px;
 }
 
 .spot-details-header {
     font-family: "Avenir";
+    margin-bottom: 25px;
+}
+
+.spot-details-images {
+    display: grid;
+    grid-template-areas:
+    "bigImg bigImg secondImg fourthImg"
+    "bigImg bigImg thirdImg fifthImg";
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 350px;
+}
+
+.first-img {
+    width: 50%;
+    height: 100%;
+    grid-area: bigImg;
+}
+
+.second-img {
+    width: 25%;
+    height: 175px;
+    margin-left: 5px;
+    grid-area: secondImg;
+}
+
+.third-img {
+    grid-area: thirdImg;
+    width: 25%;
+    height: 175px;
+}
+
+.fourth-img {
+    grid-area: fourthImg;
+    width: 25%;
+    height: 175px;
+}
+
+.fifth-img {
+    grid-area: fifthImg;
+    width: 25%;
+    height: 175px;
 }

@@ -10,6 +10,8 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const disabled = credential.length < 4 || password.length < 6;
+  const loginButton = disabled ? 'login-button-on' : "login-button-off"
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,10 +26,15 @@ function LoginFormModal() {
       });
   };
 
+  const demoLogin = () => {
+    setCredential("demo@user.io");
+    setPassword("password");
+  }
+
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="login-modal">
+      <h1 >Log In</h1>
+      <form className="login-form"onSubmit={handleSubmit}>
         <label>
           Username or Email
           <input
@@ -47,9 +54,10 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        <button id={loginButton} type="submit" disabled={disabled}>Log In</button>
+        <button id="demo-login-button" type="submit" onClick={demoLogin}>Demo Login</button>
       </form>
-    </>
+    </div>
   );
 }
 
