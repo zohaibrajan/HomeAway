@@ -28,11 +28,6 @@ module.exports = {
        },
        {
          spotId: 1,
-         url: "https://freepngimg.com/thumb/house/155703-house-modern-free-png-hq.png",
-         preview: false,
-       },
-       {
-         spotId: 1,
          url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
          preview: false,
        },
@@ -52,26 +47,6 @@ module.exports = {
          preview: true,
        },
        {
-         spotId: 2,
-         url: "https://freepngimg.com/thumb/house/155703-house-modern-free-png-hq.png",
-         preview: false,
-       },
-       {
-         spotId: 2,
-         url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
-         preview: false,
-       },
-       {
-         spotId: 2,
-         url: "https://freepngimg.com/thumb/house/1-2-construction-building-png.png",
-         preview: false,
-       },
-       {
-         spotId: 2,
-         url: "https://freepngimg.com/thumb/house/25561-2-house-image.png",
-         preview: false,
-       },
-       {
          spotId: 3,
          url: "https://parkandrefer.com/wp-content/uploads/2015/03/nice-house.png",
          preview: true,
@@ -79,21 +54,6 @@ module.exports = {
        {
          spotId: 3,
          url: "https://freepngimg.com/thumb/house/155703-house-modern-free-png-hq.png",
-         preview: false,
-       },
-       {
-         spotId: 3,
-         url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
-         preview: false,
-       },
-       {
-         spotId: 3,
-         url: "https://freepngimg.com/thumb/house/1-2-construction-building-png.png",
-         preview: false,
-       },
-       {
-         spotId: 3,
-         url: "https://freepngimg.com/thumb/house/25561-2-house-image.png",
          preview: false,
        },
        {
@@ -110,17 +70,7 @@ module.exports = {
          spotId: 4,
          url: "https://freepngimg.com/thumb/house/26801-6-house-transparent.png",
          preview: false,
-       },
-       {
-         spotId: 4,
-         url: "https://freepngimg.com/thumb/house/1-2-construction-building-png.png",
-         preview: false,
-       },
-       {
-         spotId: 4,
-         url: "https://freepngimg.com/thumb/house/25561-2-house-image.png",
-         preview: false,
-       },
+       }
      ],
      { validate: true }
    );
