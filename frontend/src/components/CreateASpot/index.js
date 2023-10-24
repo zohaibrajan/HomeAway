@@ -30,7 +30,6 @@ function CreateASpot() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errors = {};
 
     const spotDetails = {
       ownerId: user.id,
@@ -45,8 +44,13 @@ function CreateASpot() {
       price,
     };
 
-    const spot = await dispatch(createASpotThunk(spotDetails))
-    console.log('in handleSubmit', spot)
+
+    try {
+        await dispatch(createASpotThunk(spotDetails))
+    } catch (e) {
+        const error = await e.json();
+        setErrors(error.errors);
+    }
   };
 
   return (
@@ -155,6 +159,7 @@ function CreateASpot() {
             Competitive pricing can help your listing stand out and rank higher
             in search results.
           </span>
+          {errors.price && <p style={{fontSize: "12px", color: "red"}}>*{errors.price}</p>}
           <input
             type="number"
             name="pricePerNight"

@@ -8,7 +8,7 @@ function SpotDetailsPage() {
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spot = useSelector(state => state.spots[spotId]);
-    const user = useSelector(state => state.session);
+
 
     useEffect(() => {
         dispatch(getASpotThunk(spotId));
@@ -33,6 +33,8 @@ function SpotDetailsPage() {
               {spot.city}, {spot.state}, {spot.country}
             </span>
           </div>
+          {spot.SpotImages.length < 5 ? (
+          <p>Less than 5</p>) : (
           <div className="spot-details-images">
             <img
               className="small-image first-img"
@@ -55,6 +57,8 @@ function SpotDetailsPage() {
               src={spot.SpotImages[4].url}
             />
           </div>
+
+          )}
           <div className="spot-details-info">
             <div className="spot-owner-description">
               <h2 style={{margin: "0"}}>

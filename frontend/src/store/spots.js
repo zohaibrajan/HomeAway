@@ -57,6 +57,9 @@ export const createASpotThunk = (payload) => async (dispatch) => {
         const spot = await res.json();
         dispatch(createASpot(spot));
         return spot
+    } else {
+        const errors = await res.json();
+        return errors
     }
 }
 
