@@ -1,0 +1,22 @@
+.create-a-spot-div {
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    justify-content: center;
+}
+
+.create-a-spot-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: ;
+}
+
+.create-form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.form-labels {
+    margin: 0;
+}

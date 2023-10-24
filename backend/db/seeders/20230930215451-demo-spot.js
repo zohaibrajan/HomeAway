@@ -43,7 +43,8 @@ module.exports = {
           lat: 32.1234567,
           lng: -150.4732307,
           name: "App Academy 2",
-          description: "Place where web developers are created and robots",
+          description:
+            "Welcome to our enchanting Airbnb nestled in the heart of an ancient forest, where you'll experience nature in its purest form. This cozy cabin offers a magical retreat from the hustle and bustle of everyday life, allowing you to unwind in the serenity of the woods. The interior boasts a rustic charm, with a crackling fireplace, wooden beams, and a spacious loft bedroom that offers panoramic views of the surrounding wilderness. Step outside onto the expansive deck to breathe in the crisp, pine-scented air, and soak in the private hot tub under a blanket of stars. With its tranquil setting and modern amenities, this Airbnb is the perfect escape for those seeking a connection with the natural world while enjoying the comforts of home.",
           price: 150,
         },
         {
@@ -55,7 +56,8 @@ module.exports = {
           lat: 32.1233567,
           lng: -150.4732317,
           name: "Brian",
-          description: "Brians Place",
+          description:
+            "Welcome to our enchanting Airbnb nestled in the heart of an ancient forest, where you'll experience nature in its purest form. This cozy cabin offers a magical retreat from the hustle and bustle of everyday life, allowing you to unwind in the serenity of the woods. The interior boasts a rustic charm, with a crackling fireplace, wooden beams, and a spacious loft bedroom that offers panoramic views of the surrounding wilderness. Step outside onto the expansive deck to breathe in the crisp, pine-scented air, and soak in the private hot tub under a blanket of stars. With its tranquil setting and modern amenities, this Airbnb is the perfect escape for those seeking a connection with the natural world while enjoying the comforts of home.",
           price: 200,
         },
         {
@@ -67,7 +69,8 @@ module.exports = {
           lat: 31.1234567,
           lng: -160.4732307,
           name: "Peang",
-          description: "Peangs Place",
+          description:
+            "Welcome to our enchanting Airbnb nestled in the heart of an ancient forest, where you'll experience nature in its purest form. This cozy cabin offers a magical retreat from the hustle and bustle of everyday life, allowing you to unwind in the serenity of the woods. The interior boasts a rustic charm, with a crackling fireplace, wooden beams, and a spacious loft bedroom that offers panoramic views of the surrounding wilderness. Step outside onto the expansive deck to breathe in the crisp, pine-scented air, and soak in the private hot tub under a blanket of stars. With its tranquil setting and modern amenities, this Airbnb is the perfect escape for those seeking a connection with the natural world while enjoying the comforts of home.",
           price: 150,
         },
       ],
