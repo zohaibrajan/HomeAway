@@ -1,7 +1,7 @@
 .create-a-spot-div {
     display: flex;
     flex-direction: column;
-    width: 350px;
+    width: 400px;
     justify-content: center;
 }
 
@@ -9,8 +9,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-family: ;
+    font-family: "Avenir";
 }
+
 
 .create-form-container {
     display: flex;
@@ -18,5 +19,33 @@
 }
 
 .form-labels {
-    margin: 0;
+    margin: 7px 0 0 0;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+#form-split-one {
+    margin: 20px 0px;
+    border: 1px solid black;
+}
+
+#spot-description {
+    resize: none;
+}
+
+.spot-img-urls {
+    margin: 8px 0px;
+}
+
+#create-spot-submit-button {
+    align-self: center;
+    width: 100px;
+    background-color: red;
+    color: white;
+    padding: 10px 0px;
+}
+
+#create-spot-submit-button:hover {
+    background-color: rgb(157, 0, 0);
 }
