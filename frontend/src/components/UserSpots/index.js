@@ -69,7 +69,7 @@ function UserSpot() {
                 </button>
                   <OpenModalButton
                   buttonText={"Delete"}
-                  modalComponent={<DeleteASpotModal />}
+                  modalComponent={<DeleteASpotModal spot={spot}/>}
                    />
               </div>
             ))}

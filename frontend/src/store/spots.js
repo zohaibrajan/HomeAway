@@ -4,6 +4,7 @@ const ALL_SPOTS = 'spots/ALL_SPOTS'
 const SPOT_DETAILS = 'spots/SPOT_DETAILS'
 const CREATE_SPOT = 'spots/CREATE_SPOT'
 const USERS_SPOTS = 'spots/USERS_SPOTS'
+const DELETE_SPOT = 'spots/DELETE_SPOT'
 
 const getAllSpots = (spots) => {
     return {
@@ -23,6 +24,13 @@ const createASpot = (spot) => {
     return {
         type: CREATE_SPOT,
         spot
+    }
+}
+
+const deleteASpot = (spotId) => {
+    return {
+        type: DELETE_SPOT,
+        spotId
     }
 }
 
@@ -138,6 +146,11 @@ const spotsReducer = (state = {}, action) => {
                 ...state,
                 [action.spot.id]: action.spot
             }
+        }
+        case DELETE_SPOT: {
+            const newState = {...state};
+            delete newState[action.spotId];
+            return newState;
         }
         default: {
             return state;
