@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { getASpotThunk } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,22 +9,24 @@ function SpotDetailsPage() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spotObj = useSelector((state) => state.spots);
+  const [errors, setErrors] = useState({});
   const spot = spotObj[spotId]
   let previewImageUrl;
 
-  const attempt = async () => {
-    await dispatch(getASpotThunk(spotId));
-  }
-
   useEffect(() => {
-    try {
-      attempt();
-    } catch (e) {
-      console.log(attempt);
-      return (
-        <h1>404 Spot Does Not Exist</h1>
-      )
+    const res = async () => {
+      try {
+        await dispatch(getASpotThunk(spotId));
+      } catch (e) {
+        const errorsOBJ = {};
+        errorsOBJ.status = e.status;
+        errorsOBJ.statusText = e.statusText
+
+        setErrors(errorsOBJ);
+      }
     }
+
+    res()
   }, [dispatch]);
 
   const handleClick = (e) => {
@@ -33,7 +35,9 @@ function SpotDetailsPage() {
     alert("Feature Coming Soon...");
   };
 
-  if (!spot?.Owner) return null;
+  if (!spot?.Owner) return (
+    <h1>{errors.status} {errors.statusText}</h1>
+  )
 
   const spotImages = spot.SpotImages
 
@@ -59,6 +63,8 @@ function SpotDetailsPage() {
 
     smallImages.push(img)
   }
+
+  console.log(errors)
 
   return (
     <>

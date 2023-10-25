@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsersSpotsThunk } from "../../store/spots";
 import SpotTile from "../SpotTile";
 import "./UserSpots.css";
 import { useHistory } from "react-router-dom";
+import DeleteASpotModal from "../DeleteASpotModal";
+import OpenModalButton from "../OpenModalButton";
 
 function UserSpot() {
   const history = useHistory();
@@ -65,21 +67,16 @@ function UserSpot() {
                 >
                   Update
                 </button>
-                <button
-                  style={{
-                    cursor: "pointer",
-                    backgroundColor: "gray",
-                    color: "white",
-                    boxShadow: "2px 2px 2px black",
-                  }}
-                >
-                  Delete
-                </button>
+                  <OpenModalButton
+                  buttonText={"Delete"}
+                  modalComponent={<DeleteASpotModal />}
+                   />
               </div>
             ))}
           </div>
         )}
       </div>
+
     </div>
   );
 }
