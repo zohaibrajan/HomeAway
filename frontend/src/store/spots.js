@@ -63,6 +63,16 @@ export const createASpotThunk = (payload) => async (dispatch) => {
     }
 }
 
+export const addSpotImagesThunk = (spotId, spotImages) => async (dispatch) => {
+    // console.log('in thunk', spotImages);
+    spotImages.forEach(async (img) => {
+        await csrfFetch(`/api/spots/${spotId}/images`, {
+            method: "POST",
+            body: JSON.stringify(img)
+        });
+    })
+}
+
 
 const spotsReducer = (state = {}, action) => {
     switch (action.type) {

@@ -1,94 +1,109 @@
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min'
-import { getASpotThunk } from '../../store/spots';
-import { useDispatch, useSelector } from 'react-redux';
-import './SpotDetailPage.css'
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { getASpotThunk } from "../../store/spots";
+import { useDispatch, useSelector } from "react-redux";
+import SpotReviews from "../SpotReviews";
+import "./SpotDetailPage.css";
 
 function SpotDetailsPage() {
-    const dispatch = useDispatch()
-    const { spotId } = useParams();
-    const spot = useSelector(state => state.spots[spotId]);
+  const dispatch = useDispatch();
+  const { spotId } = useParams();
+  const spot = useSelector((state) => state.spots[spotId]);
+  let previewImageUrl;
 
+  useEffect(() => {
+    dispatch(getASpotThunk(spotId));
+  }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(getASpotThunk(spotId));
-    }, [dispatch])
+  const handleClick = (e) => {
+    e.preventDefault();
 
-    const handleClick = (e) => {
-        e.preventDefault();
+    alert("Feature Coming Soon...");
+  };
 
-        alert("Feature Coming Soon...")
+  if (!spot?.Owner) return null;
+
+  const spotImages = spot.SpotImages
+
+  if (spotImages.length < 5) {
+    for (let i = spot.SpotImages.length; i < 5; i++) {
+      const img = {
+        id: i + 1,
+        url: "https://www.ewingoutdoorsupply.com/media/catalog/product/placeholder/default/shutterstock_161251868.png",
+      };
+      spot.SpotImages.push(img);
     }
+  }
 
-    if (!spot?.Owner) return null
+  previewImageUrl = spotImages.find(img => img.preview === true)
+  const indexOfPreview = spotImages.indexOf(previewImageUrl)
 
-    // console.log(spot)
+  const smallImages = [];
 
-    return (
-      <>
-        <div className="spot-details">
-          <div className="spot-details-header">
-            <h2 style={{ marginBottom: "12px" }}>{spot.name}</h2>
-            <span>
-              {spot.city}, {spot.state}, {spot.country}
-            </span>
+  for (let i = 0; i < spotImages.length; i++) {
+    const img = spotImages[i];
+
+    if (i === indexOfPreview) continue;
+
+    smallImages.push(img)
+  }
+
+  return (
+    <>
+      <div className="spot-details">
+        <div className="spot-details-header">
+          <h2 style={{ marginBottom: "12px" }}>{spot.name}</h2>
+          <span>
+            {spot.city}, {spot.state}, {spot.country}
+          </span>
+        </div>
+        <div className="spot-details-images">
+          <img className="small-image first-img" src={previewImageUrl.url} />
+          <img className="small-image second-img" src={smallImages[0].url} />
+          <img className="small-image third-img" src={smallImages[1].url} />
+          <img className="small-image fourth-img" src={smallImages[2].url} />
+          <img className="small-image fifth-img" src={smallImages[3].url} />
+        </div>
+        <div className="spot-details-info">
+          <div className="spot-owner-description">
+            <h2 style={{ margin: "0" }}>
+              Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
+            </h2>
+            <p style={{ fontSize: "14px" }}>{spot.description}</p>
           </div>
-          {spot.SpotImages.length < 5 ? (
-          <p>Less than 5</p>) : (
-          <div className="spot-details-images">
-            <img
-              className="small-image first-img"
-              src={spot.SpotImages[0].url}
-            />
-            <img
-              className="small-image second-img"
-              src={spot.SpotImages[1].url}
-            />
-            <img
-              className="small-image third-img"
-              src={spot.SpotImages[2].url}
-            />
-            <img
-              className="small-image fourth-img"
-              src={spot.SpotImages[3].url}
-            />
-            <img
-              className="small-image fifth-img"
-              src={spot.SpotImages[4].url}
-            />
-          </div>
-
-          )}
-          <div className="spot-details-info">
-            <div className="spot-owner-description">
-              <h2 style={{margin: "0"}}>
-                Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
-              </h2>
-              <p style={{fontSize: "14px"}}>{spot.description}</p>
+          <div className="spot-booking-tile">
+            <div className="spot-price-review">
+              <span style={{ fontWeight: "500" }} id="spot-price">
+                <i>${spot.price}</i> night
+              </span>
+              {spot.numReviews ? (
+                <p>
+                  <i className="fa-solid fa-star "></i>
+                  {spot.avgRating} - {spot.numReviews} review(s)
+                </p>
+              ) : (
+                <p>
+                  <i className="fa-solid fa-star"></i>
+                  New
+                </p>
+              )}
             </div>
-            <div className="spot-booking-tile">
-              <div className="spot-price-review">
-                <span style={{fontWeight: "500"}}id="spot-price"><i>${spot.price}</i> night</span>
-                {spot.numReviews ? (
-                  <p>
-                    <i className="fa-solid fa-star "></i>
-                    {spot.avgRating} - {spot.numReviews} review(s)
-                  </p>
-                ) : (
-                  <p>
-                    <i className="fa-solid fa-star"></i>
-                    New
-                  </p>
-                )}
-              </div>
-              <div className="reserve-spot">
-                <button id="reserve-button" onClick={handleClick}>Reserve</button>
-              </div>
+            <div className="reserve-spot">
+              <button id="reserve-button" onClick={handleClick}>
+                Reserve
+              </button>
             </div>
           </div>
         </div>
-      </>
-    );
+        <div style={{display: "flex"}}>
+          <span style={{borderBottom: "4px solid black", width: "100%", margin: "7px 0 0 0", borderRadius: "10px"}}></span>
+        </div>
+        <div className="spot-review">
+          <SpotReviews spot={spot}/>
+        </div>
+      </div>
+    </>
+  );
 }
 
-export default SpotDetailsPage
+export default SpotDetailsPage;

@@ -1,0 +1,12 @@
+.reviews-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.spot-reviews-header {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    font-family: "Avenir";
+    font-weight: 500;
+}
