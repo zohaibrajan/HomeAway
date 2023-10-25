@@ -8,11 +8,23 @@ import "./SpotDetailPage.css";
 function SpotDetailsPage() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  const spot = useSelector((state) => state.spots[spotId]);
+  const spotObj = useSelector((state) => state.spots);
+  const spot = spotObj[spotId]
   let previewImageUrl;
 
+  const attempt = async () => {
+    await dispatch(getASpotThunk(spotId));
+  }
+
   useEffect(() => {
-    dispatch(getASpotThunk(spotId));
+    try {
+      attempt();
+    } catch (e) {
+      console.log(attempt);
+      return (
+        <h1>404 Spot Does Not Exist</h1>
+      )
+    }
   }, [dispatch]);
 
   const handleClick = (e) => {

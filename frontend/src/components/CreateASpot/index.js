@@ -4,46 +4,54 @@ import "./CreateASpot.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createASpotThunk } from "../../store/spots";
 import { addSpotImagesThunk } from "../../store/spots";
+import { editASpotAThunk } from "../../store/spots";
 
-function CreateASpot({ formType = "Create A Spot", spot = {} }) {
+function CreateASpot({ formType = "Create A Spot", spot }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
-  let [country, setCountry] = useState(
+
+
+  const [country, setCountry] = useState(
     formType === "Update Spot" ? spot.country : ""
   );
-  let [address, setAddress] = useState(
+  const [address, setAddress] = useState(
     formType === "Update Spot" ? spot.address : ""
   );
-  let [city, setCity] = useState(formType === "Update Spot" ? spot.city : "");
-  let [state, setState] = useState(
+  const [city, setCity] = useState(formType === "Update Spot" ? spot.city : "");
+  const [state, setState] = useState(
     formType === "Update Spot" ? spot.state : ""
   );
-  let [description, setDescription] = useState(
+  const [description, setDescription] = useState(
     formType === "Update Spot" ? spot.description : ""
   );
-  let [latitude, setLatitude] = useState(
+  const [latitude, setLatitude] = useState(
     formType === "Update Spot" ? spot.lat : ""
   );
-  let [longitude, setLongitude] = useState(
+  const [longitude, setLongitude] = useState(
     formType === "Update Spot" ? spot.lng : ""
   );
-  let [name, setName] = useState(formType === "Update Spot" ? spot.name : "");
-  let [price, setPrice] = useState(
+  const [name, setName] = useState(formType === "Update Spot" ? spot.name : "");
+  const [price, setPrice] = useState(
     formType === "Update Spot" ? spot.price : ""
   );
-  let [previewImageUrl, setPreviewImageUrl] = useState("");
-  let [url1, setUrl1] = useState("");
-  let [url2, setUrl2] = useState("");
-  let [url3, setUrl3] = useState("");
-  let [url4, setUrl4] = useState("");
-  let [errors, setErrors] = useState({});
+  const [previewImageUrl, setPreviewImageUrl] = useState("");
+  const [url1, setUrl1] = useState("");
+  const [url2, setUrl2] = useState("");
+  const [url3, setUrl3] = useState("");
+  const [url4, setUrl4] = useState("");
+  const [errors, setErrors] = useState({});
 
   if (!user) {
     history.replace("/");
   }
 
+  if (user.id !== spot.ownerId) {
+    history.replace('/')
+  }
+
   const handleSubmit = async (e) => {
+    // console.log(formType === "Update Spot");
     e.preventDefault();
     const errors = {};
     const spotImgs = [
@@ -123,8 +131,15 @@ function CreateASpot({ formType = "Create A Spot", spot = {} }) {
       history.push(`/spots/${res.id}`);
     }
 
-    if (!Object.keys(errors).length && formType === "Update Spot") {
-      const res = await dispatch(spot.id, spotDetails)
+    if (formType === "Update Spot") {
+      delete errors.previewImageUrl;
+      delete errors.urlEndsWith;
+
+      if (!Object.keys(errors).length) {
+        const res = await dispatch(editASpotAThunk(spot.id, spotDetails))
+        history.push(`/spots/${res.id}`);
+      }
+
     }
 
     setErrors(errors);

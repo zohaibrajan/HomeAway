@@ -32,10 +32,15 @@ export const editASpotAThunk = (spotId, payload) => async (dispatch) => {
         body: JSON.stringify(payload)
     });
 
+    // console.log(res)
+
     if (res.ok) {
         const spot = await res.json();
-        // dispatch(editSpot(spot));
+        dispatch(createASpot(spot));
         return spot
+    } else {
+        const errors = await res.json();
+        return errors;
     }
 }
 
@@ -68,6 +73,8 @@ export const getASpotThunk = (spotId) => async (dispatch) => {
         const spot = await res.json();
         dispatch(getASpot(spot));
         return spot
+    } else {
+        return res
     }
 }
 
