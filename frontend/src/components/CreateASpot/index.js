@@ -5,25 +5,39 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { createASpotThunk } from "../../store/spots";
 import { addSpotImagesThunk } from "../../store/spots";
 
-function CreateASpot() {
+function CreateASpot({ formType = "Create A Spot", spot = {} }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
-  const [country, setCountry] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [description, setDescription] = useState("");
-  const [latitude, setLatitude] = useState("");
-  const [longitude, setLongitude] = useState("");
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState("");
-  const [previewImageUrl, setPreviewImageUrl] = useState("");
-  const [url1, setUrl1] = useState("");
-  const [url2, setUrl2] = useState("");
-  const [url3, setUrl3] = useState("");
-  const [url4, setUrl4] = useState("");
-  const [errors, setErrors] = useState({});
+  let [country, setCountry] = useState(
+    formType === "Update Spot" ? spot.country : ""
+  );
+  let [address, setAddress] = useState(
+    formType === "Update Spot" ? spot.address : ""
+  );
+  let [city, setCity] = useState(formType === "Update Spot" ? spot.city : "");
+  let [state, setState] = useState(
+    formType === "Update Spot" ? spot.state : ""
+  );
+  let [description, setDescription] = useState(
+    formType === "Update Spot" ? spot.description : ""
+  );
+  let [latitude, setLatitude] = useState(
+    formType === "Update Spot" ? spot.lat : ""
+  );
+  let [longitude, setLongitude] = useState(
+    formType === "Update Spot" ? spot.lng : ""
+  );
+  let [name, setName] = useState(formType === "Update Spot" ? spot.name : "");
+  let [price, setPrice] = useState(
+    formType === "Update Spot" ? spot.price : ""
+  );
+  let [previewImageUrl, setPreviewImageUrl] = useState("");
+  let [url1, setUrl1] = useState("");
+  let [url2, setUrl2] = useState("");
+  let [url3, setUrl3] = useState("");
+  let [url4, setUrl4] = useState("");
+  let [errors, setErrors] = useState({});
 
   if (!user) {
     history.replace("/");
@@ -78,45 +92,53 @@ function CreateASpot() {
       errors.urlEndsWith = "Image URL must end in .png, .jpg, or .jpeg";
     }
 
-    if (!country.length) errors.country = "Country is required"
+    if (!country.length) errors.country = "Country is required";
 
-    if (!address.length) errors.address = "Address is required"
+    if (!address.length) errors.address = "Address is required";
 
-    if (!city.length) errors.city = "City is required"
+    if (!city.length) errors.city = "City is required";
 
-    if (!state.length) errors.state = "State is required"
+    if (!state.length) errors.state = "State is required";
 
     if (!latitude) errors.lat = "Latitude is required";
 
-    if (!longitude) errors.lng = "Longitude is required"
+    if (!longitude) errors.lng = "Longitude is required";
 
     if (latitude > 90 || latitude < -90) errors.lat = "Latitude is invalid";
 
-    if (longitude > 90 || longitude < -90) errors.lng = "Longitude is invalid";
+    if (longitude > 180 || longitude < -180) errors.lng = "Longitude is invalid";
 
-    if (description.length < 30) errors.description = "Description needs a minimum of 30 characters";
+    if (description.length < 30)
+      errors.description = "Description needs a minimum of 30 characters";
 
-    if (!name.length) errors.name = "Name is required"
+    if (!name.length) errors.name = "Name is required";
 
     if (price < 0) errors.price = "Price is invalid";
 
-    if (!price) errors.price = "Price is required"
+    if (!price) errors.price = "Price is required";
 
-    if (!Object.keys(errors).length) {
-        const res = await dispatch(createASpotThunk(spotDetails));
-        await dispatch(addSpotImagesThunk(res.id, spotImgs));
-        history.push(`/spots/${res.id}`);
+    if (!Object.keys(errors).length && formType === "Create A Spot") {
+      const res = await dispatch(createASpotThunk(spotDetails));
+      await dispatch(addSpotImagesThunk(res.id, spotImgs));
+      history.push(`/spots/${res.id}`);
     }
 
-    setErrors(errors)
-  };
+    if (!Object.keys(errors).length && formType === "Update Spot") {
+      const res = await dispatch(spot.id, spotDetails)
+    }
 
+    setErrors(errors);
+  };
 
   return (
     <div className="create-form-container">
       <div className="create-a-spot-div">
         <form className="create-a-spot-form" onSubmit={handleSubmit}>
-          <h2 style={{ margin: "0" }}>Create a new Spot</h2>
+          {formType === "Create A Spot" ? (
+            <h2 style={{ margin: "0" }}>Create a new Spot</h2>
+          ) : (
+            <h2 style={{ margin: "0" }}>Update your Spot</h2>
+          )}
           <h3 style={{ margin: "10px 0 0 0" }}>Where's your place located?</h3>
           <span style={{ marginBottom: "30px" }}>
             Guest will only get your exact address once they booked a
@@ -268,69 +290,77 @@ function CreateASpot() {
             </p>
           )}
           <span id="form-split-one"></span>
-          <span style={{ fontSize: "15px", fontWeight: "500" }}>
-            Liven up your spot with photos
-          </span>
-          <span
-            style={{ fontSize: "12px", fontWeight: "200", margin: "10px 0" }}
-          >
-            Submit photos to publish your spot.
-          </span>
-          <input
-            className="spot-img-urls"
-            type="text"
-            name="previewImageUrl"
-            placeholder="Preview Image URL"
-            value={previewImageUrl}
-            onChange={(e) => setPreviewImageUrl(e.target.value)}
-          />
-          {errors.previewImageUrl && (
-            <p style={{ fontSize: "12px", color: "red", margin: "0" }}>
-              *{errors.previewImageUrl}
-            </p>
+          {formType === "Create A Spot" && (
+            <>
+              <span style={{ fontSize: "15px", fontWeight: "500" }}>
+                Liven up your spot with photos
+              </span>
+              <span
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "200",
+                  margin: "10px 0",
+                }}
+              >
+                Submit photos to publish your spot.
+              </span>
+              <input
+                className="spot-img-urls"
+                type="text"
+                name="previewImageUrl"
+                placeholder="Preview Image URL"
+                value={previewImageUrl}
+                onChange={(e) => setPreviewImageUrl(e.target.value)}
+              />
+              {errors.previewImageUrl && (
+                <p style={{ fontSize: "12px", color: "red", margin: "0" }}>
+                  *{errors.previewImageUrl}
+                </p>
+              )}
+              <input
+                disabled={!previewImageUrl.length}
+                className="spot-img-urls"
+                type="text"
+                name="previewImageUrl"
+                placeholder="Image Url"
+                value={url1}
+                onChange={(e) => setUrl1(e.target.value)}
+              />
+              {errors.urlEndsWith && (
+                <p style={{ fontSize: "12px", color: "red", margin: "0" }}>
+                  *{errors.urlEndsWith}
+                </p>
+              )}
+              <input
+                disabled={!previewImageUrl.length}
+                className="spot-img-urls"
+                type="text"
+                name="previewImageUrl"
+                placeholder="Image Url"
+                value={url2}
+                onChange={(e) => setUrl2(e.target.value)}
+              />
+              <input
+                disabled={!previewImageUrl.length}
+                className="spot-img-urls"
+                type="text"
+                name="previewImageUrl"
+                placeholder="Image Url"
+                value={url3}
+                onChange={(e) => setUrl3(e.target.value)}
+              />
+              <input
+                disabled={!previewImageUrl.length}
+                className="spot-img-urls"
+                type="text"
+                name="previewImageUrl"
+                placeholder="Image Url"
+                value={url4}
+                onChange={(e) => setUrl4(e.target.value)}
+              />
+              <span id="form-split-one"></span>
+            </>
           )}
-          <input
-            disabled={!previewImageUrl.length}
-            className="spot-img-urls"
-            type="text"
-            name="previewImageUrl"
-            placeholder="Image Url"
-            value={url1}
-            onChange={(e) => setUrl1(e.target.value)}
-          />
-          {errors.urlEndsWith && (
-            <p style={{ fontSize: "12px", color: "red", margin: "0" }}>
-              *{errors.urlEndsWith}
-            </p>
-          )}
-          <input
-            disabled={!previewImageUrl.length}
-            className="spot-img-urls"
-            type="text"
-            name="previewImageUrl"
-            placeholder="Image Url"
-            value={url2}
-            onChange={(e) => setUrl2(e.target.value)}
-          />
-          <input
-            disabled={!previewImageUrl.length}
-            className="spot-img-urls"
-            type="text"
-            name="previewImageUrl"
-            placeholder="Image Url"
-            value={url3}
-            onChange={(e) => setUrl3(e.target.value)}
-          />
-          <input
-            disabled={!previewImageUrl.length}
-            className="spot-img-urls"
-            type="text"
-            name="previewImageUrl"
-            placeholder="Image Url"
-            value={url4}
-            onChange={(e) => setUrl4(e.target.value)}
-          />
-          <span id="form-split-one"></span>
           <button id="create-spot-submit-button" type="submit">
             Create Spot
           </button>

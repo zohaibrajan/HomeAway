@@ -10,7 +10,7 @@ export default function SpotTile({ spot }) {
     }
 
     return (
-      <div className="spot-tile" onClick={handleClick}>
+      <div className="spot-tile" title={spot.name} onClick={handleClick}>
         <img id="spot-img" src={spot.previewImage} />
         <div className="spot-text">
           <div className="spot-text-details">

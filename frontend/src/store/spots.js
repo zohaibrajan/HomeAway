@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const ALL_SPOTS = 'spots/ALL_SPOTS'
 const SPOT_DETAILS = 'spots/SPOT_DETAILS'
 const CREATE_SPOT = 'spots/CREATE_SPOT'
+const USERS_SPOTS = 'spots/USERS_SPOTS'
 
 const getAllSpots = (spots) => {
     return {
@@ -22,6 +23,32 @@ const createASpot = (spot) => {
     return {
         type: CREATE_SPOT,
         spot
+    }
+}
+
+export const editASpotAThunk = (spotId, payload) => async (dispatch) => {
+    const res = await csrfFetch(`/api/spots/${spotId}`, {
+        method: "PUT",
+        body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+        const spot = await res.json();
+        // dispatch(editSpot(spot));
+        return spot
+    }
+}
+
+export const getUsersSpotsThunk = () => async (dispatch) => {
+    const res = await csrfFetch("/api/spots/current");
+
+    // console.log(res);
+
+    if (res.ok) {
+        const spots = await res.json();
+        // console.log(spots)
+        dispatch(getAllSpots(spots))
+        return spots
     }
 }
 
@@ -62,6 +89,7 @@ export const createASpotThunk = (payload) => async (dispatch) => {
         return errors
     }
 }
+
 
 export const addSpotImagesThunk = (spotId, spotImages) => async (dispatch) => {
     // console.log('in thunk', spotImages);

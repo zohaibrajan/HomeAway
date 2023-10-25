@@ -22,7 +22,7 @@ function SpotReviews({ spot }) {
     return date2 - date1
   })
 
-  console.log('after', reviews)
+  // console.log('after', reviews)
 
   useEffect(() => {
     dispatch(getReviewsForSpotThunk(spot.id));
@@ -55,14 +55,18 @@ function SpotReviews({ spot }) {
       >
         Post A Review
       </button>
-      {reviews.length > 0 && (
+      {reviews.length > 0 ? (
         <div className="reviews">
           {reviews.map((review) => (
             <div className="individual-review">
-                <h5></h5>
+              <span id="review-firstName">{review.User.firstName}</span>
+              <span id="review-date">{review.createdAt.slice(0, 10)}</span>
+              <p style={{ margin: "0" }}>{review.review}</p>
             </div>
           ))}
         </div>
+      ) : (
+        <span id="review-firstName">Be the frst to post a review!</span>
       )}
     </div>
   );

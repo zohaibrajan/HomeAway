@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import * as sessionActions from "../../store/session";
 import OpenModalMenuItem from "./OpenModalMenuItem";
@@ -6,6 +7,7 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 
 function ProfileButton({ user }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
@@ -39,6 +41,11 @@ function ProfileButton({ user }) {
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
+  const manageSpot = () => {
+    history.push("/spots/current");
+    closeMenu();
+  }
+
   return (
     <>
       <button className="profile-button" onClick={openMenu}>
@@ -55,9 +62,15 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <li className="profile-elements-loggedIn">
-              Hello, {user.username}
+              <label style={{margin: "10px 0 0 0"}}>Hello, {user.username}</label>
             </li>
-            <li className="profile-elements-loggedIn">{user.email}</li>
+            <li className="profile-elements-loggedIn">
+              <label style={{margin: "10px 0 0 0"}}>{user.email}</label>
+            </li>
+
+            <li className="profile-elements-manage-spot">
+              <label id="manage-spot" onClick={manageSpot}>Manage Spots</label>
+            </li>
 
             <li id="profile-elements-logout-button">
               <button id="logout-button" onClick={logout}>

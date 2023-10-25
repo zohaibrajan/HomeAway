@@ -2,6 +2,19 @@
     display: none;
 }
 
+.profile-elements-manage-spot {
+    display: flex;
+    justify-content: center;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 5px ;
+}
+
+#manage-spot {
+    margin: 10px 0;
+    cursor: pointer;
+}
+
 #create-a-spot {
     position: absolute;
     right: 100px;
@@ -32,6 +45,11 @@
     cursor: pointer;
 }
 
+.profile-elements-manage-spot:hover {
+    background-color: #d8d8d8;
+    cursor: pointer;
+}
+
 .profile-button:hover {
     background-color: #e8e8e8;
 }
@@ -56,12 +74,14 @@
     font-weight: 500;
 }
 
+
 #profile-logout {
     justify-content: center;
 }
 
 .profile-elements-loggedIn {
-    padding: 7px 10px 5px 10px;
+    display: flex;
+    justify-content: center;
 }
 
 #logout-button {
