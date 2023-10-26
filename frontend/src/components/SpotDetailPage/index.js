@@ -106,7 +106,8 @@ function SpotDetailsPage() {
               {reviews.length ? (
                 <p>
                   <i className="fa-solid fa-star "></i>
-                  {spotRating.toFixed(2)} - {reviews.length} review(s)
+                  {spotRating.toFixed(2)} · {reviews.length}{" "}
+                  {reviews.length === 1 ? "review" : "reviews"}
                 </p>
               ) : (
                 <p>
@@ -122,11 +123,18 @@ function SpotDetailsPage() {
             </div>
           </div>
         </div>
-        <div style={{display: "flex"}}>
-          <span style={{borderBottom: "4px solid black", width: "100%", margin: "7px 0 0 0", borderRadius: "10px"}}></span>
+        <div style={{ display: "flex" }}>
+          <span
+            style={{
+              borderBottom: "4px solid black",
+              width: "100%",
+              margin: "7px 0 0 0",
+              borderRadius: "10px",
+            }}
+          ></span>
         </div>
         <div className="spot-review">
-          <SpotReviews spot={spot}/>
+          <SpotReviews spot={spot} />
         </div>
       </div>
     </>

@@ -1,20 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { useModal } from "../../context/Modal";
+import "./CreateAReview.css"
 
 function CreateAReviewModal({ spot }) {
     const { closeModal } = useModal();
+    const [reviewText, setReviewText] = useState("")
+    const [stars, setStars] = useState(0);
+    const disabled = reviewText.length < 10;
+
+    const className = disabled ? "not-confirmed-review" : "confirm-review";
+
+    const handleSubmit = () => {
+
+    }
+
     return (
-      <div className="creat-a-review-modal">
-        <h1>Confirm Delete</h1>
-        <span id="delete-spot-span">
-          Are you sure you want to delete this review?
-        </span>
-        <button className="confirm-delete">
-          Yes (Delete Review)
-        </button>
-        <button className="do-not-delete" onClick={closeModal}>
-          No (Keep Review)
-        </button>
+      <div className="create-a-review-modal">
+        <h1>How was your stay?</h1>
+        <textarea
+          id="review-text"
+          rows="8"
+          name="review"
+          placeholder="Leave your review here..."
+          value={reviewText}
+          onChange={(e) => setReviewText(e.target.value)}
+        />
+        <button className={className} disabled={disabled}>Submit Your Review</button>
       </div>
     );
 }
