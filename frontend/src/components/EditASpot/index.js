@@ -3,17 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import CreateASpot from '../CreateASpot'
 import { getASpotThunk } from "../../store/spots";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function EditASpot() {
+    const history = useHistory();
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spot = useSelector(state => state.spots[spotId]);
 
     useEffect(() => {
-        dispatch(getASpotThunk(spotId))
+        if (spot) dispatch(getASpotThunk(spotId))
     }, [dispatch, spotId]);
 
-    if (!spot) return null
+    if (!spot) {
+        history.push("/");
+        return null
+    }
 
     // console.log(spot)
     return (

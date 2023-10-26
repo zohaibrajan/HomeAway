@@ -4,6 +4,7 @@ import { getReviewsForSpotThunk } from "../../store/reviews";
 import "./SpotReviews.css";
 
 function SpotReviews({ spot }) {
+  const user = useSelector(state => state.session.user)
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj);
   const dispatch = useDispatch();
@@ -62,6 +63,9 @@ function SpotReviews({ spot }) {
               <span id="review-firstName">{review.User.firstName}</span>
               <span id="review-date">{review.createdAt.slice(0, 10)}</span>
               <p style={{ margin: "0" }}>{review.review}</p>
+              {user && user.id === review.userId && (
+                <button>Delete</button>
+              )}
             </div>
           ))}
         </div>

@@ -14,12 +14,12 @@ function UserSpot() {
   const spotsObj = useSelector((state) => state.spots);
   const spots = Object.values(spotsObj);
 
-  if (!user) {
-    history.push("/");
-  }
+  // console.log("USER", user)
+
 
   useEffect(() => {
-    dispatch(getUsersSpotsThunk());
+      if (user) dispatch(getUsersSpotsThunk())
+
   }, [dispatch]);
 
   const createASpot = (e) => {
@@ -33,6 +33,10 @@ function UserSpot() {
     history.push(`/spots/${spot.id}/edit`);
   }
 
+  if (!user) {
+    history.push('/')
+    return
+  }
 
   return (
     <div className="manage-spots-container">

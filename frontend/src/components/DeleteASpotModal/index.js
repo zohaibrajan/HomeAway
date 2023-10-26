@@ -14,15 +14,12 @@ function DeleteASpotModal({ spot }) {
     const deleteSpot = (e) => {
         e.preventDefault();
 
-
         try {
             dispatch(deleteASpotThunk(spot.id)).then(closeModal())
             history.push("/spots/current");
         } catch (e) {
             console.log(e)
         }
-
-
     }
 
   return (

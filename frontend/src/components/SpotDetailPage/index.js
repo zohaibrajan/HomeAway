@@ -64,7 +64,7 @@ function SpotDetailsPage() {
     smallImages.push(img)
   }
 
-  console.log(errors)
+  // console.log(errors)
 
   return (
     <>
@@ -97,7 +97,7 @@ function SpotDetailsPage() {
               {spot.numReviews ? (
                 <p>
                   <i className="fa-solid fa-star "></i>
-                  {spot.avgRating} - {spot.numReviews} review(s)
+                  {spot.avgRating.toFixed(2)} - {spot.numReviews} review(s)
                 </p>
               ) : (
                 <p>
