@@ -40,7 +40,8 @@
 .all-spots-container {
     display: flex;
     flex-flow: wrap;
-    justify-content: center;
+    max-width: 1000px;
+    margin: auto;
 }
 
 #spot-price {

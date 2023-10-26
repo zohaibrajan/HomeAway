@@ -3,27 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { getReviewsForSpotThunk } from "../../store/reviews";
 import OpenModalButton from "../OpenModalButton";
 import DeleteAReviewModal from "../DeleteAReviewModal";
+import CreateAReviewModal from "../CreateAReviewModal";
 import "./SpotReviews.css";
 
 function SpotReviews({ spot }) {
-  const user = useSelector(state => state.session.user)
+  const user = useSelector((state) => state.session.user);
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj);
   const dispatch = useDispatch();
 
-  //   console.log(spot.avgRating);
-
-  const postReview = () => {
-    alert("Feature coming soon...");
-  };
-
-//   console.log('before', reviews)
-
   reviews.sort((a, b) => {
-    const date1 = new Date(a.createdAt)
+    const date1 = new Date(a.createdAt);
     const date2 = new Date(b.createdAt);
-    return date2 - date1
-  })
+    return date2 - date1;
+  });
 
   // console.log('after', reviews)
 
@@ -33,7 +26,13 @@ function SpotReviews({ spot }) {
 
   let spotRating;
   if (reviews.length) {
-    spotRating = reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length
+    spotRating =
+      reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length;
+  }
+
+  let alreadyReviewed
+  if (user) {
+    alreadyReviewed = reviews.find(review => review.userId === user.id)
   }
 
   // console.log(spotRating)
@@ -53,36 +52,36 @@ function SpotReviews({ spot }) {
           </span>
         )}
       </div>
-      <button
-        style={{
-          width: "120px",
-          backgroundColor: "gray",
-          color: "white",
-          margin: "15px 0 0 0",
-          boxShadow: "2px 2px 2px black",
-        }}
-        onClick={postReview}
-      >
-        Post A Review
-      </button>
+      {user && user.id !== spot.ownerId && !alreadyReviewed && (
+        <>
+          <span style={{ marginTop: "15px" }}></span>
+          <OpenModalButton
+            buttonText={"Post Your Review"}
+            modalComponent={<CreateAReviewModal spot={spot} />}
+          />
+        </>
+      )}
+      <span style={{ marginTop: "7px" }}></span>
       {reviews.length > 0 ? (
         <div className="reviews">
           {reviews.map((review) => (
             <div className="individual-review">
               <span id="review-firstName">{review.User.firstName}</span>
               <span id="review-date">{review.createdAt.slice(0, 10)}</span>
-              <p style={{ margin: "0", marginBottom: "10px" }}>{review.review}</p>
+              <p style={{ margin: "0", marginBottom: "10px" }}>
+                {review.review}
+              </p>
               {user && user.id === review.userId && (
                 <OpenModalButton
-                buttonText={"Delete"}
-                modalComponent={<DeleteAReviewModal review={review}/>}
+                  buttonText={"Delete"}
+                  modalComponent={<DeleteAReviewModal review={review} />}
                 />
               )}
             </div>
           ))}
         </div>
       ) : (
-        <span id="review-firstName">Be the frst to post a review!</span>
+        <span id="review-firstName">Be the first to post a review!</span>
       )}
     </div>
   );
