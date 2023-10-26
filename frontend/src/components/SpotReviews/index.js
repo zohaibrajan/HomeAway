@@ -37,7 +37,7 @@ function SpotReviews({ spot }) {
 
   // console.log(spotRating)
 
-  console.log(reviews)
+  // console.log(reviews)
 
   return (
     <div className="reviews-container">
