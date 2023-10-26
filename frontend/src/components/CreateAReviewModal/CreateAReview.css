@@ -24,3 +24,16 @@
     background-color: red;
     color: white;
 }
+
+.rating-input {
+    display: flex;
+    margin-right: 4px;
+    font-size: 22px;
+    margin-bottom: 10px;
+    font-family: "Avenir";
+    align-items: center;
+}
+
+.filled {
+    background-color: black;
+}

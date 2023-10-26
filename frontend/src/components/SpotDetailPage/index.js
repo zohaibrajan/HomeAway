@@ -106,7 +106,7 @@ function SpotDetailsPage() {
               {reviews.length ? (
                 <p>
                   <i className="fa-solid fa-star "></i>
-                  {spotRating.toFixed(2)} · {reviews.length}{" "}
+                  {spotRating.toFixed(1)} · {reviews.length}{" "}
                   {reviews.length === 1 ? "review" : "reviews"}
                 </p>
               ) : (

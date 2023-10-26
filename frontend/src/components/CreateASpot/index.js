@@ -376,9 +376,15 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
               <span id="form-split-one"></span>
             </>
           )}
+          {formType === "Update Spot" ? (
+            <button id="create-spot-submit-button" type="submit">
+            Update Spot
+          </button>
+          ) : (
           <button id="create-spot-submit-button" type="submit">
             Create Spot
           </button>
+          )}
         </form>
       </div>
     </div>

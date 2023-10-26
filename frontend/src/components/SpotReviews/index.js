@@ -37,13 +37,15 @@ function SpotReviews({ spot }) {
 
   // console.log(spotRating)
 
+  console.log(reviews)
+
   return (
     <div className="reviews-container">
       <div className="spot-reviews-header">
         {reviews.length > 0 ? (
           <span style={{ fontSize: "25px" }}>
             <i className="fa-solid fa-star "></i>
-            {spotRating.toFixed(2)} · {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
+            {spotRating.toFixed(1)} · {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
           </span>
         ) : (
           <span style={{ fontSize: "25px" }}>
