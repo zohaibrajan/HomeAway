@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviewsForSpotThunk } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton";
+import DeleteAReviewModal from "../DeleteAReviewModal";
 import "./SpotReviews.css";
 
 function SpotReviews({ spot }) {
@@ -64,7 +66,10 @@ function SpotReviews({ spot }) {
               <span id="review-date">{review.createdAt.slice(0, 10)}</span>
               <p style={{ margin: "0" }}>{review.review}</p>
               {user && user.id === review.userId && (
-                <button>Delete</button>
+                <OpenModalButton
+                buttonText={"Delete"}
+                modalComponent={<DeleteAReviewModal review={review}/>}
+                />
               )}
             </div>
           ))}
