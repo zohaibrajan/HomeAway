@@ -119,6 +119,10 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
     if (description.length < 30)
       errors.description = "Description needs a minimum of 30 characters";
 
+      if (description.length > 256) {
+        errors.description = "Description maximumm is 256 characters";
+      }
+
     if (!name.length) errors.name = "Name is required";
 
     if (price < 0) errors.price = "Price is invalid";
