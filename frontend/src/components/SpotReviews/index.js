@@ -31,13 +31,20 @@ function SpotReviews({ spot }) {
     dispatch(getReviewsForSpotThunk(spot.id));
   }, [dispatch]);
 
+  let spotRating;
+  if (reviews.length) {
+    spotRating = reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length
+  }
+
+  // console.log(spotRating)
+
   return (
     <div className="reviews-container">
       <div className="spot-reviews-header">
-        {spot.avgRating ? (
+        {reviews.length > 0 ? (
           <span style={{ fontSize: "25px" }}>
             <i className="fa-solid fa-star "></i>
-            {spot.avgRating} - {spot.numReviews} review(s)
+            {spotRating.toFixed(2)} - {reviews.length} review(s)
           </span>
         ) : (
           <span style={{ fontSize: "25px" }}>
@@ -64,7 +71,7 @@ function SpotReviews({ spot }) {
             <div className="individual-review">
               <span id="review-firstName">{review.User.firstName}</span>
               <span id="review-date">{review.createdAt.slice(0, 10)}</span>
-              <p style={{ margin: "0" }}>{review.review}</p>
+              <p style={{ margin: "0", marginBottom: "10px" }}>{review.review}</p>
               {user && user.id === review.userId && (
                 <OpenModalButton
                 buttonText={"Delete"}

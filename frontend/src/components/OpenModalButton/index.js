@@ -18,6 +18,7 @@ function OpenModalButton({
   return (
     <button
       style={{
+        width: "fit-content",
         boxShadow: "2px 2px 2px black",
         backgroundColor: "gray",
         cursor: "pointer",

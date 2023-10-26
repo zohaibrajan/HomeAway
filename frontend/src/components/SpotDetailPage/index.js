@@ -9,6 +9,8 @@ function SpotDetailsPage() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spotObj = useSelector((state) => state.spots);
+  const reviewsObj = useSelector((state) => state.reviews);
+  const reviews = Object.values(reviewsObj);
   const [errors, setErrors] = useState({});
   const spot = spotObj[spotId]
   let previewImageUrl;
@@ -66,6 +68,13 @@ function SpotDetailsPage() {
 
   // console.log(errors)
 
+    let spotRating;
+    if (reviews.length) {
+      spotRating =
+        reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length;
+    }
+
+
   return (
     <>
       <div className="spot-details">
@@ -94,10 +103,10 @@ function SpotDetailsPage() {
               <span style={{ fontWeight: "500" }} id="spot-price">
                 <i>${spot.price}</i> night
               </span>
-              {spot.numReviews ? (
+              {reviews.length ? (
                 <p>
                   <i className="fa-solid fa-star "></i>
-                  {spot.avgRating.toFixed(2)} - {spot.numReviews} review(s)
+                  {spotRating.toFixed(2)} - {reviews.length} review(s)
                 </p>
               ) : (
                 <p>

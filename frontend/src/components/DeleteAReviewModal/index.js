@@ -2,7 +2,8 @@ import React from "react";
 import { useModal } from "../../context/Modal";
 import { useDispatch } from "react-redux";
 import { deleteASpotThunk } from "../../store/spots";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
+import { deleteAReviewThunk } from "../../store/reviews";
 
 function DeleteAReviewModal({ review }) {
   const history = useHistory();
@@ -12,7 +13,8 @@ function DeleteAReviewModal({ review }) {
   const deleteReview = (e) => {
     e.preventDefault();
 
-    // dispatch(deleteAReviewThunk(review.id)).then(closeModal());
+    // console.log(review)
+    dispatch(deleteAReviewThunk(review.id)).then(closeModal());
 
   };
 
