@@ -44,6 +44,11 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
 
   if (!user) {
     history.replace("/");
+    return
+  }
+
+  if (formType === "Update Spot") {
+    if (user.id !== spot.ownerId) history.replace("/")
   }
 
   const handleSubmit = async (e) => {
