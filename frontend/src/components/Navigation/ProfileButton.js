@@ -62,10 +62,10 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <li className="profile-elements-loggedIn">
-              <label style={{margin: "10px 0 0 0"}}>Hello, {user.username}</label>
+              <label style={{margin: "10px 10px 0"}}>Hello, {user.username}</label>
             </li>
             <li className="profile-elements-loggedIn">
-              <label style={{margin: "10px 0 0 0"}}>{user.email}</label>
+              <label style={{margin: "10px 10px 0"}}>{user.email}</label>
             </li>
 
             <li className="profile-elements-manage-spot">
