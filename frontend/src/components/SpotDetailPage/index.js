@@ -96,7 +96,7 @@ function SpotDetailsPage() {
             <h2 style={{ margin: "0" }}>
               Hosted by {spot.Owner.firstName} {spot.Owner.lastName}
             </h2>
-            <p style={{ fontSize: "14px" }}>{spot.description}</p>
+            <p style={{ fontSize: "14px", wordBreak: "break-all" }}>{spot.description}</p>
           </div>
           <div className="spot-booking-tile">
             <div className="spot-price-review">
