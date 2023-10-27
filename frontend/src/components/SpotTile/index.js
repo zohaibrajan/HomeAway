@@ -14,7 +14,7 @@ export default function SpotTile({ spot }) {
         <img id="spot-img" src={spot.previewImage} />
         <div className="spot-text">
           <div className="spot-text-details">
-          <span>{`${spot.city}, ${spot.state}`}</span>
+          <span style={{maxWidth: "100%"}}>{`${spot.city}, ${spot.state}`}</span>
           <p id="spot-reviews">
             <i class="fa-solid fa-star"></i>
             {spot.avgRating ? spot.avgRating.toFixed(1) : <p>New</p>}

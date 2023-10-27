@@ -107,6 +107,10 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
 
     if (!city.length) errors.city = "City is required";
 
+    if (city.length > 15) errors.city = "City name must be less than 15 characters"
+
+    if (state.length > 15) errors.state = "State name must be less than 15 characters"
+
     if (!state.length) errors.state = "State is required";
 
     if (!latitude) errors.lat = "Latitude is required";
