@@ -62,7 +62,7 @@ function UserSpot() {
                 <button
                   style={{
                     cursor: "pointer",
-                    margin: "40px 10px 10px 10px",
+                    margin: "60px 10px 10px 10px",
                     backgroundColor: "gray",
                     color: "white",
                     boxShadow: "2px 2px 2px black",

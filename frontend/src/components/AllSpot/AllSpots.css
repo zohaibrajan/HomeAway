@@ -30,9 +30,10 @@
 .spot-text-details {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 0;
-    height: 45px;
+    height: 100%;
     font-family:"Avenir";
     font-size: 15px;
 }
@@ -52,5 +53,6 @@
 }
 
 .single-spot-tile {
-    height: 300px;
+    display: flex;
+    height: 310px;
 }

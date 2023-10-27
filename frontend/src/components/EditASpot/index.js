@@ -19,7 +19,7 @@ function EditASpot() {
     // console.log(user)
 
     useEffect(() => {
-        dispatch(getASpotThunk(spotId)).catch((e) => history.push(`/${spotId}/edit`));
+        dispatch(getASpotThunk(spotId)).catch((e) => history.push(`/`));
     }, [dispatch, spotId]);
 
     if (!spot) {
