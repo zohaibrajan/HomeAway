@@ -6,10 +6,15 @@ import { getASpotThunk } from "../../store/spots";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function EditASpot() {
+    const user = useSelector(state => state.session.user)
     const history = useHistory();
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spot = useSelector(state => state.spots[spotId]);
+
+    if (!user) {
+        history.replace("/")
+    }
 
     useEffect(() => {
         if (spot) dispatch(getASpotThunk(spotId))
