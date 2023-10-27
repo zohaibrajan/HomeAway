@@ -7,6 +7,21 @@ import CreateAReviewModal from "../CreateAReviewModal";
 import "./SpotReviews.css";
 
 function SpotReviews({ spot }) {
+  const months = {
+    1: 'Jan',
+    2: "Feb",
+    3: "Mar",
+    4: "April",
+    5: "May",
+    6: "June",
+    7: "July",
+    8: "Aug",
+    9: "Sept",
+    10: "Oct",
+    11: "Nov",
+    12: "Dec"
+  }
+
   const user = useSelector((state) => state.session.user);
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj);
@@ -69,7 +84,7 @@ function SpotReviews({ spot }) {
           {reviews.map((review) => (
             <div className="individual-review">
               <span id="review-firstName">{review.User.firstName}</span>
-              <span id="review-date">{review.createdAt.slice(0, 7)}</span>
+              <span id="review-date">{review.createdAt.slice(0, 4)} {months[review.createdAt.slice(5, 7)]}</span>
               <p style={{ margin: "0", marginBottom: "10px" }}>
                 {review.review}
               </p>
