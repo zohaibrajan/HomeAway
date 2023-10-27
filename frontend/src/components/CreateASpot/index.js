@@ -172,6 +172,7 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
 
     if (!price) errors.price = "Price is required";
 
+
     if (!Object.keys(errors).length && formType === "Create A Spot") {
       const res = await dispatch(createASpotThunk(spotDetails));
       await dispatch(addSpotImagesThunk(res.id, spotImgs));
@@ -341,7 +342,9 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
           <input
             type="number"
             name="pricePerNight"
-            placeholder="Price per night (USD)"
+            placeholder="Price per night ($USD)"
+            step={"0.01"}
+            min={0}
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
