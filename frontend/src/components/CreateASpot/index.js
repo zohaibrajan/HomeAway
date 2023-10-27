@@ -11,7 +11,6 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
 
-
   const [country, setCountry] = useState(
     formType === "Update Spot" ? spot.country : ""
   );
@@ -44,11 +43,11 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
 
   if (!user) {
     history.replace("/");
-    return
+    return;
   }
 
   if (formType === "Update Spot") {
-    if (user.id !== spot.ownerId) history.replace("/")
+    if (user.id !== spot.ownerId) history.replace("/");
   }
 
   const handleSubmit = async (e) => {
@@ -101,15 +100,53 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
       errors.urlEndsWith = "Image URL must end in .png, .jpg, or .jpeg";
     }
 
+    if (
+      url1 &&
+      (!url1.includes(".png") &&
+      !url1.includes(".jpg") &&
+      !url1.includes(".jpeg"))
+    ) {
+      errors.urlEndsWith = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+
+    if (
+      url2 && (
+      !url2.includes(".png") &&
+      !url2.includes(".jpg") &&
+      !url2.includes(".jpeg"))
+    ) {
+      errors.urlEndsWith = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+
+    if (
+      url3 && (
+      !url3.includes(".png") &&
+      !url3.includes(".jpg") &&
+      !url3.includes(".jpeg"))
+    ) {
+      errors.urlEndsWith = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+
+    if (
+      url4 &&
+      (!url4.includes(".png") &&
+        !url4.includes(".jpg") &&
+        !url4.includes(".jpeg"))
+    ) {
+      errors.urlEndsWith = "Image URL must end in .png, .jpg, or .jpeg";
+    }
+
     if (!country.length) errors.country = "Country is required";
 
     if (!address.length) errors.address = "Address is required";
 
     if (!city.length) errors.city = "City is required";
 
-    if (city.length > 15) errors.city = "City name must be less than 15 characters"
+    if (city.length > 15)
+      errors.city = "City name must be less than 15 characters";
 
-    if (state.length > 15) errors.state = "State name must be less than 15 characters"
+    if (state.length > 15)
+      errors.state = "State name must be less than 15 characters";
 
     if (!state.length) errors.state = "State is required";
 
@@ -119,14 +156,15 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
 
     if (latitude > 90 || latitude < -90) errors.lat = "Latitude is invalid";
 
-    if (longitude > 180 || longitude < -180) errors.lng = "Longitude is invalid";
+    if (longitude > 180 || longitude < -180)
+      errors.lng = "Longitude is invalid";
 
     if (description.length < 30)
       errors.description = "Description needs a minimum of 30 characters";
 
-      if (description.length > 256) {
-        errors.description = "Description maximumm is 256 characters";
-      }
+    if (description.length > 256) {
+      errors.description = "Description maximumm is 256 characters";
+    }
 
     if (!name.length) errors.name = "Name is required";
 
@@ -145,10 +183,9 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
       delete errors.urlEndsWith;
 
       if (!Object.keys(errors).length) {
-        const res = await dispatch(editASpotAThunk(spot.id, spotDetails))
+        const res = await dispatch(editASpotAThunk(spot.id, spotDetails));
         history.push(`/spots/${res.id}`);
       }
-
     }
 
     setErrors(errors);
@@ -387,12 +424,12 @@ function CreateASpot({ formType = "Create A Spot", spot }) {
           )}
           {formType === "Update Spot" ? (
             <button id="create-spot-submit-button" type="submit">
-            Update Spot
-          </button>
+              Update Spot
+            </button>
           ) : (
-          <button id="create-spot-submit-button" type="submit">
-            Create Spot
-          </button>
+            <button id="create-spot-submit-button" type="submit">
+              Create Spot
+            </button>
           )}
         </form>
       </div>
