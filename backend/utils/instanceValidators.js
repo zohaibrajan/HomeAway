@@ -34,8 +34,8 @@ const validators = {
             .withMessage("Description is required"),
         check("price")
             .exists({ checkFalsy: true })
-            .isInt({min: 0})
-            .withMessage("A Valid Price per night is required"),
+            .isFloat({min: 0})
+            .withMessage("Price per night is required"),
         handleValidationErrors
     ],
 
