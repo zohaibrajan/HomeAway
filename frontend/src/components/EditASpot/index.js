@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function EditASpot() {
     // const user = useSelector(state => state.session.user)
+    const history = useHistory()
     const dispatch = useDispatch()
     const { spotId } = useParams();
     const spot = useSelector(state => state.spots[spotId]);
@@ -18,7 +19,7 @@ function EditASpot() {
     // console.log(user)
 
     useEffect(() => {
-        dispatch(getASpotThunk(spotId))
+        dispatch(getASpotThunk(spotId)).catch((e) => history.push(`/${spotId}/edit`));
     }, [dispatch, spotId]);
 
     if (!spot) {

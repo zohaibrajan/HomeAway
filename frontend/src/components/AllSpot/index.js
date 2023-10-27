@@ -21,7 +21,7 @@ function AllSpots() {
         <>
         <div className="all-spots-container">
             {spots.map(spot => (
-                <div>
+                <div className="single-spot-tile">
                     <SpotTile spot={spot} />
                 </div>
             ))}
