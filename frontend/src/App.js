@@ -37,7 +37,7 @@ function App() {
           <SpotDetailsPage />
         </Route>
         <Route>
-          <h1>404 Page Not Found</h1>
+          <h1>404 Not Found</h1>
         </Route>
       </Switch>}
     </>
