@@ -29,9 +29,9 @@ module.exports = {
           country: "United States of America",
           lat: 37.7645358,
           lng: -122.4730327,
-          name: "App Academy",
+          name: "Mountain Meadow Cottage",
           description:
-            "Welcome to our enchanting Airbnb nestled in the heart of an ancient forest, where you'll experience nature in its purest form. This cozy cabin offers a magical retreat from the hustle and bustle of everyday life, allowing you to unwind in the serenity of the woods. The interior boasts a rustic charm, with a crackling fireplace, wooden beams, and a spacious loft bedroom that offers panoramic views of the surrounding wilderness. Step outside onto the expansive deck to breathe in the crisp, pine-scented air, and soak in the private hot tub under a blanket of stars. With its tranquil setting and modern amenities, this Airbnb is the perfect escape for those seeking a connection with the natural world while enjoying the comforts of home.",
+            "Escape to a charming Airbnb in an ancient forest. Cozy cabin, rustic charm, loft bedroom, hot tub, and nature's tranquility await.",
           price: 123,
         },
         {
@@ -42,9 +42,9 @@ module.exports = {
           country: "United States of America",
           lat: 32.1234567,
           lng: -150.4732307,
-          name: "App Academy 2",
+          name: "Lakeside Oasis Retreat",
           description:
-            "Welcome to our enchanting Airbnb nestled in the heart of an ancient forest, where you'll experience nature in its purest form. This cozy cabin offers a magical retreat from the hustle and bustle of everyday life, allowing you to unwind in the serenity of the woods. The interior boasts a rustic charm, with a crackling fireplace, wooden beams, and a spacious loft bedroom that offers panoramic views of the surrounding wilderness. Step outside onto the expansive deck to breathe in the crisp, pine-scented air, and soak in the private hot tub under a blanket of stars. With its tranquil setting and modern amenities, this Airbnb is the perfect escape for those seeking a connection with the natural world while enjoying the comforts of home.",
+            "Escape to a charming Airbnb in an ancient forest. Cozy cabin, rustic charm, loft bedroom, hot tub, and nature's tranquility await.",
           price: 150,
         },
         {
@@ -55,9 +55,9 @@ module.exports = {
           country: "United States of America",
           lat: 32.1233567,
           lng: -150.4732317,
-          name: "Brian",
+          name: "Serenity Cabin in the Woods",
           description:
-            "Welcome to our enchanting Airbnb nestled in the heart of an ancient forest, where you'll experience nature in its purest form. This cozy cabin offers a magical retreat from the hustle and bustle of everyday life, allowing you to unwind in the serenity of the woods. The interior boasts a rustic charm, with a crackling fireplace, wooden beams, and a spacious loft bedroom that offers panoramic views of the surrounding wilderness. Step outside onto the expansive deck to breathe in the crisp, pine-scented air, and soak in the private hot tub under a blanket of stars. With its tranquil setting and modern amenities, this Airbnb is the perfect escape for those seeking a connection with the natural world while enjoying the comforts of home.",
+            "Escape to a charming Airbnb in an ancient forest. Cozy cabin, rustic charm, loft bedroom, hot tub, and nature's tranquility await.",
           price: 200,
         },
         {
@@ -68,9 +68,9 @@ module.exports = {
           country: "United States of America",
           lat: 31.1234567,
           lng: -160.4732307,
-          name: "Peang",
+          name: "Pineview Wilderness Lodge",
           description:
-            "Welcome to our enchanting Airbnb nestled in the heart of an ancient forest, where you'll experience nature in its purest form. This cozy cabin offers a magical retreat from the hustle and bustle of everyday life, allowing you to unwind in the serenity of the woods. The interior boasts a rustic charm, with a crackling fireplace, wooden beams, and a spacious loft bedroom that offers panoramic views of the surrounding wilderness. Step outside onto the expansive deck to breathe in the crisp, pine-scented air, and soak in the private hot tub under a blanket of stars. With its tranquil setting and modern amenities, this Airbnb is the perfect escape for those seeking a connection with the natural world while enjoying the comforts of home.",
+            "Escape to a charming Airbnb in an ancient forest. Cozy cabin, rustic charm, loft bedroom, hot tub, and nature's tranquility await.",
           price: 150,
         },
       ],
