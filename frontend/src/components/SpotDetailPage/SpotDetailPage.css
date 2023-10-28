@@ -12,14 +12,15 @@
     margin: auto;
     display: grid;
     grid-template-areas:
-    "bigImg bigImg secondImg fourthImg"
-    "bigImg bigImg thirdImg fifthImg";
+    "bigImg secondImg fourthImg"
+    "bigImg thirdImg fifthImg";
     max-width: 1000px;
     min-width: 1000px;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 50% 25% 25%;
     grid-template-rows: 50% 50%;
-    height: 352px;
+    height: 365px;
 }
+
 
 .first-img {
     width: 100%;
