@@ -13,6 +13,7 @@ function CreateAReviewModal({ spot }) {
   const [rating, setRating] = useState(0)
   const disabled = reviewText.length < 10;
   const className = disabled ? "not-confirmed-review" : "confirm-review";
+  const [ errors, setErrors ] = useState({})
 
   // console.log(user)
 
@@ -22,19 +23,50 @@ function CreateAReviewModal({ spot }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const errorsObj = {};
 
     const review = {
       review: reviewText,
       stars: rating
     }
 
-    dispatch(createAReviewThunk(spot.id, review, user)).then(closeModal())
+    if (reviewText.length > 255) errorsObj.review = "Review must be shorter than 255 characters"
+    if (rating < 1 || rating > 5) errorsObj.stars = "Please select your stars"
+
+    if (!Object.keys(errorsObj).length) {
+      dispatch(createAReviewThunk(spot.id, review, user)).then(closeModal());
+    }
+
+    setErrors(errorsObj);
   };
+
 
   // console.log(rating);
   return (
     <div className="create-a-review-modal">
-      <h1>How was your stay?</h1>
+      <h1 style={{ marginBottom: "5px" }}>How was your stay?</h1>
+      {errors.review && (
+        <p
+          style={{
+            fontSize: "12px",
+            color: "red",
+            marginTop: "0",
+          }}
+        >
+          *{errors.review}
+        </p>
+      )}
+      {errors.stars&& (
+        <p
+          style={{
+            fontSize: "12px",
+            color: "red",
+            marginTop: "0",
+          }}
+        >
+          *{errors.stars}
+        </p>
+      )}
       <textarea
         id="review-text"
         rows="8"
@@ -57,7 +89,9 @@ function CreateAReviewModal({ spot }) {
         >
           <i
             className={
-              activeRating >= 1 || rating >= 1 ? "fa-solid fa-star" : "fa-regular fa-star"
+              activeRating >= 1 || rating >= 1
+                ? "fa-solid fa-star"
+                : "fa-regular fa-star"
             }
           ></i>
         </div>
@@ -74,7 +108,9 @@ function CreateAReviewModal({ spot }) {
         >
           <i
             className={
-              activeRating >= 2 ||  rating >= 2 ? "fa-solid fa-star" : "fa-regular fa-star"
+              activeRating >= 2 || rating >= 2
+                ? "fa-solid fa-star"
+                : "fa-regular fa-star"
             }
           ></i>
         </div>
@@ -91,7 +127,9 @@ function CreateAReviewModal({ spot }) {
         >
           <i
             className={
-              activeRating >= 3 || rating >= 3 ? "fa-solid fa-star" : "fa-regular fa-star"
+              activeRating >= 3 || rating >= 3
+                ? "fa-solid fa-star"
+                : "fa-regular fa-star"
             }
           ></i>
         </div>
@@ -108,7 +146,9 @@ function CreateAReviewModal({ spot }) {
         >
           <i
             className={
-              activeRating >= 4 || rating >= 4 ? "fa-solid fa-star" : "fa-regular fa-star"
+              activeRating >= 4 || rating >= 4
+                ? "fa-solid fa-star"
+                : "fa-regular fa-star"
             }
           ></i>
         </div>
@@ -125,7 +165,9 @@ function CreateAReviewModal({ spot }) {
         >
           <i
             className={
-              activeRating >= 5 || rating >= 5 ? "fa-solid fa-star" : "fa-regular fa-star"
+              activeRating >= 5 || rating >= 5
+                ? "fa-solid fa-star"
+                : "fa-regular fa-star"
             }
           ></i>
         </div>

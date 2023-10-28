@@ -85,7 +85,7 @@ function SpotReviews({ spot }) {
             <div className="individual-review">
               <span id="review-firstName">{review.User.firstName}</span>
               <span id="review-date">{review.createdAt.slice(0, 4)} {months[review.createdAt.slice(5, 7)]}</span>
-              <p style={{ margin: "0", marginBottom: "10px" }}>
+              <p style={{ margin: "0", marginBottom: "10px", wordBreak: "break-all" }}>
                 {review.review}
               </p>
               {user && user.id === review.userId && (
