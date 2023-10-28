@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useParams } from "react-router-dom";
 import { getASpotThunk } from "../../store/spots";
 import { useDispatch, useSelector } from "react-redux";
 import SpotReviews from "../SpotReviews";
 import "./SpotDetailPage.css";
 
 function SpotDetailsPage() {
+  const history = useHistory()
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const spotObj = useSelector((state) => state.spots);
@@ -38,8 +39,10 @@ function SpotDetailsPage() {
   };
 
   if (!spot?.Owner) return (
-    <h1>404 Not Found</h1>
-  )
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <h1 style={{ fontFamily: "Avenir" }}>404 Does Not Exist</h1>
+    </div>
+  );
 
   const spotImages = spot.SpotImages
 

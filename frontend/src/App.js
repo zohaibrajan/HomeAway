@@ -19,27 +19,30 @@ function App() {
   return (
     <>
       <Navigation isLoaded={isLoaded} />
-      {isLoaded &&
-      <Switch>
-        <Route exact path="/">
-          <AllSpots />
-        </Route>
-        <Route exact path="/spots/new">
-          <CreateASpot />
-        </Route>
-        <Route exact path="/spots/current">
-          <UserSpot />
-        </Route>
-        <Route exact path="/spots/:spotId/edit">
-          <EditASpot />
-        </Route>
-        <Route exact path="/spots/:spotId">
-          <SpotDetailsPage />
-        </Route>
-        <Route>
-          <h1>404 Not Found</h1>
-        </Route>
-      </Switch>}
+      {isLoaded && (
+        <Switch>
+          <Route exact path="/">
+            <AllSpots />
+          </Route>
+          <Route exact path="/spots/new">
+            <CreateASpot />
+          </Route>
+          <Route exact path="/spots/current">
+            <UserSpot />
+          </Route>
+          <Route exact path="/spots/:spotId/edit">
+            <EditASpot />
+          </Route>
+          <Route exact path="/spots/:spotId">
+            <SpotDetailsPage />
+          </Route>
+          <Route>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <h1 style={{fontFamily: "Avenir"}}>404 Does Not Exist</h1>
+            </div>
+          </Route>
+        </Switch>
+      )}
     </>
   );
 }
