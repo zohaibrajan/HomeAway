@@ -74,6 +74,7 @@ function SpotDetailsPage() {
         reviews.reduce((acc, curr) => acc + curr.stars, 0) / reviews.length;
     }
 
+    const price = spot.price
 
   return (
     <>
@@ -101,7 +102,7 @@ function SpotDetailsPage() {
           <div className="spot-booking-tile">
             <div className="spot-price-review">
               <span style={{ fontWeight: "500" }} id="spot-price">
-                <i>${spot.price}</i> night
+                <i>${price.toFixed(2)}</i> night
               </span>
               {reviews.length ? (
                 <p>
