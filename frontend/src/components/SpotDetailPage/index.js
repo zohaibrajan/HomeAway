@@ -38,7 +38,7 @@ function SpotDetailsPage() {
   };
 
   if (!spot?.Owner) return (
-    <h1>{errors.status} {errors.statusText}</h1>
+    <h1>404 Not Found</h1>
   )
 
   const spotImages = spot.SpotImages
