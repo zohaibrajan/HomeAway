@@ -20,7 +20,7 @@ export default function SpotTile({ spot }) {
             {spot.avgRating ? spot.avgRating.toFixed(1) : <p>New</p>}
           </p>
           </div>
-            <p id="spot-price"><span style={{fontWeight: "900"}}>${spot.price}</span> Night</p>
+            <p id="spot-price"><span style={{fontWeight: "900"}}>${spot.price.toFixed(2)}</span> Night</p>
         </div>
       </div>
     );
