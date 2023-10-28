@@ -60,7 +60,8 @@ function SpotReviews({ spot }) {
         {reviews.length > 0 ? (
           <span style={{ fontSize: "25px" }}>
             <i className="fa-solid fa-star "></i>
-            {spotRating.toFixed(1)} · {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
+            {spotRating.toFixed(1)} · {reviews.length}{" "}
+            {reviews.length === 1 ? "review" : "reviews"}
           </span>
         ) : (
           <span style={{ fontSize: "25px" }}>
@@ -84,8 +85,17 @@ function SpotReviews({ spot }) {
           {reviews.map((review) => (
             <div className="individual-review">
               <span id="review-firstName">{review.User.firstName}</span>
-              <span id="review-date">{review.createdAt.slice(0, 4)} {months[review.createdAt.slice(5, 7)]}</span>
-              <p style={{ margin: "0", marginBottom: "10px", wordBreak: "break-all" }}>
+              <span id="review-date">
+                {review.createdAt.slice(0, 4)}{" "}
+                {months[review.createdAt.slice(5, 7)]}
+              </span>
+              <p
+                style={{
+                  margin: "0",
+                  marginBottom: "10px",
+                  overflowWrap: "break-word",
+                }}
+              >
                 {review.review}
               </p>
               {user && user.id === review.userId && (

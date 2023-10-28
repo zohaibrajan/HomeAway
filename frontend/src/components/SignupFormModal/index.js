@@ -44,20 +44,45 @@ function SignupFormModal() {
     });
   };
 
+
   return (
     <div className="signup-modal">
       <h1>Sign Up</h1>
+      {errors.confirmPassword && (
+        <p style={{ marginTop: "0", fontSize: "15px", color: "red" }}>
+          {errors.confirmPassword}
+        </p>
+      )}
+      {errors.email && (
+        <p style={{ marginTop: "0", fontSize: "15px", color: "red" }}>
+          {errors.email}
+        </p>
+      )}
+      {errors.username && (
+        <p style={{ marginTop: "0", fontSize: "15px", color: "red" }}>
+          {errors.username}
+        </p>
+      )}
+      {errors.firstName && (
+        <p style={{ marginTop: "0", fontSize: "15px", color: "red" }}>
+          {errors.firstName}
+        </p>
+      )}
+      {errors.lastName && (
+        <p style={{ marginTop: "0", fontSize: "15px", color: "red" }}>
+          {errors.lastName}
+        </p>
+      )}
       <form className="signup-form" onSubmit={handleSubmit}>
         <label>
           Email
           <input
-            type="text"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
         <label>
           Username
           <input
@@ -67,7 +92,6 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
         <label>
           First Name
           <input
@@ -77,7 +101,6 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
         <label>
           Last Name
           <input
@@ -87,7 +110,6 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
         <label>
           Password
           <input
@@ -107,8 +129,9 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button id={signUpButton} type="submit" disabled={disabled}>Sign Up</button>
+        <button id={signUpButton} type="submit" disabled={disabled}>
+          Sign Up
+        </button>
       </form>
     </div>
   );

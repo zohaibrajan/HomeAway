@@ -33,8 +33,9 @@ function LoginFormModal() {
 
   return (
     <div className="login-modal">
-      <h1 >Log In</h1>
-      <form className="login-form"onSubmit={handleSubmit}>
+      <h1>Log In</h1>
+      {errors.credential && <p style={{marginTop: "0", fontSize: "15px", color: "red"}}>{errors.credential}</p>}
+      <form className="login-form" onSubmit={handleSubmit}>
         <label>
           Username or Email
           <input
@@ -53,9 +54,12 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button id={loginButton} type="submit" disabled={disabled}>Log In</button>
-        <button id="demo-login-button" type="submit" onClick={demoLogin}>Demo Login</button>
+        <button id={loginButton} type="submit" disabled={disabled}>
+          Log In
+        </button>
+        <button id="demo-login-button" type="submit" onClick={demoLogin}>
+          Demo Login
+        </button>
       </form>
     </div>
   );
