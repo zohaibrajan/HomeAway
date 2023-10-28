@@ -101,7 +101,7 @@ function SpotDetailsPage() {
           <div className="spot-booking-tile">
             <div className="spot-price-review">
               <span style={{ fontWeight: "500" }} id="spot-price">
-                <i>${spot.price.toFixed(2)}</i> night
+                <i>${spot.price}</i> night
               </span>
               {reviews.length ? (
                 <p>
