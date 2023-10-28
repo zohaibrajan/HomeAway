@@ -9,8 +9,6 @@ export default function SpotTile({ spot }) {
       history.push(`/spots/${spot.id}`)
     }
 
-    const price = spot.price
-
     return (
       <div className="spot-tile" title={spot.name} onClick={handleClick}>
         <img id="spot-img" src={spot.previewImage} />
@@ -22,7 +20,7 @@ export default function SpotTile({ spot }) {
             {spot.avgRating ? spot.avgRating.toFixed(1) : <p>New</p>}
           </p>
           </div>
-            <p id="spot-price"><span style={{fontWeight: "900"}}>${price.toFixed(2)}</span> Night</p>
+            <p id="spot-price"><span style={{fontWeight: "900"}}>${spot.price}</span> Night</p>
         </div>
       </div>
     );
