@@ -23,10 +23,10 @@ function DeleteASpotModal({ spot }) {
       <span id="delete-spot-span">
         Are you sure you want to remove this spot from the listings?
       </span>
-      <button className="confirm-delete" onClick={deleteSpot}>
+      <button className="confirm-delete" style={{cursor: "pointer"}}onClick={deleteSpot}>
         Yes (Delete Spot)
       </button>
-      <button className="do-not-delete" onClick={closeModal}>
+      <button className="do-not-delete" style={{cursor: "pointer"}}onClick={closeModal}>
         No (Keep Spot)
       </button>
     </div>
