@@ -12,6 +12,7 @@ function SpotDetailsPage() {
   const spotObj = useSelector((state) => state.spots);
   const reviewsObj = useSelector((state) => state.reviews);
   const reviews = Object.values(reviewsObj);
+  const [isLoaded, setIsLoaded] = useState(false)
   const [errors, setErrors] = useState({});
   const spot = spotObj[spotId]
   let previewImageUrl;
@@ -24,7 +25,7 @@ function SpotDetailsPage() {
         const errorsOBJ = {};
         errorsOBJ.status = e.status;
         errorsOBJ.statusText = e.statusText
-
+        setIsLoaded(true)
         setErrors(errorsOBJ);
       }
     }
@@ -38,11 +39,14 @@ function SpotDetailsPage() {
     alert("Feature Coming Soon...");
   };
 
-  if (!spot?.Owner) return (
+  if (isLoaded && !spot?.Owner) return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <h1 style={{ fontFamily: "Avenir" }}>404 Does Not Exist</h1>
     </div>
   );
+
+  if (!spot?.Owner) return  null
+
 
   const spotImages = spot.SpotImages
 
