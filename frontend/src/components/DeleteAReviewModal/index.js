@@ -24,10 +24,10 @@ function DeleteAReviewModal({ review }) {
       <span id="delete-spot-span">
         Are you sure you want to delete this review?
       </span>
-      <button className="confirm-delete" onClick={deleteReview}>
+      <button className="confirm-delete" style={{cursor: "pointer"}}onClick={deleteReview}>
         Yes (Delete Review)
       </button>
-      <button className="do-not-delete" onClick={closeModal}>
+      <button className="do-not-delete" style={{cursor: "pointer"}}onClick={closeModal}>
         No (Keep Review)
       </button>
     </div>

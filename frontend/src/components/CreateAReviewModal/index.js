@@ -11,7 +11,7 @@ function CreateAReviewModal({ spot }) {
   const [reviewText, setReviewText] = useState("");
   const [activeRating, setActiveRating] = useState(0);
   const [rating, setRating] = useState(0)
-  const disabled = reviewText.length < 10;
+  const disabled = reviewText.length < 10 || rating === 0;
   const className = disabled ? "not-confirmed-review" : "confirm-review";
   const [ errors, setErrors ] = useState({})
 
@@ -78,13 +78,13 @@ function CreateAReviewModal({ spot }) {
       <div className="rating-input">
         <div
           onMouseEnter={() => {
-            if (!disabled) setActiveRating(1);
+            setActiveRating(1);
           }}
           onMouseLeave={() => {
-            if (!disabled) setActiveRating(rating);
+            setActiveRating(rating);
           }}
           onClick={() => {
-            if (!disabled) onChange(1);
+            onChange(1);
           }}
         >
           <i
@@ -97,13 +97,13 @@ function CreateAReviewModal({ spot }) {
         </div>
         <div
           onMouseEnter={() => {
-            if (!disabled) setActiveRating(2);
+            setActiveRating(2);
           }}
           onMouseLeave={() => {
-            if (!disabled) setActiveRating(rating);
+            setActiveRating(rating);
           }}
           onClick={() => {
-            if (!disabled) onChange(2);
+            onChange(2);
           }}
         >
           <i
@@ -116,13 +116,13 @@ function CreateAReviewModal({ spot }) {
         </div>
         <div
           onMouseEnter={() => {
-            if (!disabled) setActiveRating(3);
+            setActiveRating(3);
           }}
           onMouseLeave={() => {
-            if (!disabled) setActiveRating(rating);
+            setActiveRating(rating);
           }}
           onClick={() => {
-            if (!disabled) onChange(3);
+            onChange(3);
           }}
         >
           <i
@@ -135,13 +135,13 @@ function CreateAReviewModal({ spot }) {
         </div>
         <div
           onMouseEnter={() => {
-            if (!disabled) setActiveRating(4);
+            setActiveRating(4);
           }}
           onMouseLeave={() => {
-            if (!disabled) setActiveRating(rating);
+            setActiveRating(rating);
           }}
           onClick={() => {
-            if (!disabled) onChange(4);
+            onChange(4);
           }}
         >
           <i
@@ -154,13 +154,13 @@ function CreateAReviewModal({ spot }) {
         </div>
         <div
           onMouseEnter={() => {
-            if (!disabled) setActiveRating(5);
+            setActiveRating(5);
           }}
           onMouseLeave={() => {
-            if (!disabled) setActiveRating(rating);
+            setActiveRating(rating);
           }}
           onClick={() => {
-            if (!disabled) onChange(5);
+            onChange(5);
           }}
         >
           <i

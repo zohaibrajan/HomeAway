@@ -23,6 +23,7 @@
 .confirm-review {
     background-color: red;
     color: white;
+    cursor: pointer;
 }
 
 .rating-input {
