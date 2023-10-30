@@ -13,7 +13,7 @@ export default function SpotTile({ spot }) {
 
     return (
       <div className="spot-tile" title={spot.name} onClick={handleClick}>
-        <img id="spot-img" src={spot.previewImage} />
+        <img id="spot-img" style={{objectFit: "cover"}} src={spot.previewImage} />
         <div className="spot-text">
           <div className="spot-text-details">
           <span style={{maxWidth: "100%"}}>{`${spot.city}, ${spot.state}`}</span>

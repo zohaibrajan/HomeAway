@@ -3,6 +3,10 @@
     margin: auto
 }
 
+.small-image {
+    object-fit: cover;
+}
+
 .spot-details-header {
     font-family: "Avenir";
     margin-bottom: 25px;
